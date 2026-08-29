@@ -35,7 +35,7 @@ class TaskTracker extends Component
     // Form fields
     public string $title = '';
     public string $description = '';
-    public ?int $user_id = null; // Assigned To
+    public ?int $user_id = null; // Assigned To (Required)
     public string $priority = 'medium'; // 'low', 'medium', 'high'
     public string $status = 'pending'; // 'pending', 'in_progress', 'completed'
     public string $due_date = '';
@@ -45,31 +45,53 @@ class TaskTracker extends Component
     public ?int $deletingTaskId = null;
     public string $deletingTaskTitle = '';
 
+    /**
+     * Strict Validation Rules
+     */
     protected function rules(): array
     {
         return [
             'title' => 'required|string|min:3|max:255',
             'description' => 'nullable|string|max:2000',
-            'user_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'priority' => 'required|in:low,medium,high',
             'status' => 'required|in:pending,in_progress,completed',
             'due_date' => 'required|date',
         ];
     }
 
-    protected $messages = [
-        'title.required' => 'Task Title is required.',
-        'title.min' => 'Task Title must be at least 3 characters.',
-        'priority.required' => 'Priority is required (Low, Medium, High).',
-        'priority.in' => 'Priority must be Low, Medium, or High.',
-        'status.required' => 'Status is required (Pending, In Progress, Completed).',
-        'status.in' => 'Status must be Pending, In Progress, or Completed.',
-        'due_date.required' => 'Due Date is required.',
-    ];
+    /**
+     * Custom User-Friendly Error Messages
+     */
+    protected function messages(): array
+    {
+        return [
+            'title.required' => 'Task title is required.',
+            'title.min' => 'Task title must be at least 3 characters.',
+            'title.max' => 'Task title cannot exceed 255 characters.',
+            'user_id.required' => 'Please select or enter the person responsible for this task.',
+            'user_id.exists' => 'The selected person is invalid.',
+            'priority.required' => 'Priority is required.',
+            'priority.in' => 'Priority must be Low, Medium, or High.',
+            'status.required' => 'Status is required.',
+            'status.in' => 'Status must be Pending, In Progress, or Completed.',
+            'due_date.required' => 'Due date is required.',
+            'due_date.date' => 'Please provide a valid due date.',
+            'description.max' => 'Description cannot exceed 2000 characters.',
+        ];
+    }
 
     public function mount(): void
     {
         $this->due_date = Carbon::now()->addDays(3)->format('Y-m-d');
+    }
+
+    /**
+     * Real-Time Validation: Validates and clears errors as user types/selects
+     */
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
     }
 
     public function updatingSearch(): void
@@ -107,7 +129,7 @@ class TaskTracker extends Component
         $this->editingTaskId = null;
         $this->title = '';
         $this->description = '';
-        $this->user_id = Auth::id();
+        $this->user_id = Auth::id() ?: (User::first()->id ?? null);
         $this->priority = 'medium';
         $this->status = 'pending';
         $this->due_date = Carbon::now()->addDays(3)->format('Y-m-d');
@@ -127,19 +149,22 @@ class TaskTracker extends Component
         $this->status = in_array($task->status, ['pending', 'in_progress', 'completed']) ? $task->status : 'pending';
         $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         
-        // Close view modal if opening edit from view modal
         $this->showViewModal = false;
         $this->showTaskModal = true;
     }
 
+    /**
+     * Server-Side Validation & Database Protection
+     */
     public function saveTask(): void
     {
+        // 1. Backend validation check (stops execution if invalid)
         $validated = $this->validate();
 
+        // 2. Database Insertion / Update
         if ($this->isEditing && $this->editingTaskId) {
             $task = Task::findOrFail($this->editingTaskId);
             
-            // Check if status changed to completed
             if ($validated['status'] === 'completed' && $task->status !== 'completed') {
                 $validated['completed_at'] = Carbon::now();
             } elseif ($validated['status'] !== 'completed') {
@@ -157,6 +182,7 @@ class TaskTracker extends Component
             Flux::toast(variant: 'success', text: __('New task created successfully.'));
         }
 
+        // 3. Reset state and close modal
         $this->showTaskModal = false;
         $this->reset(['title', 'description', 'editingTaskId', 'isEditing']);
     }

@@ -808,65 +808,111 @@
         @endif
     </flux:modal>
 
-    {{-- Create / Edit Task Modal Form --}}
+    {{-- Create / Edit Task Modal Form with Validation Messages --}}
     <flux:modal wire:model="showTaskModal" class="md:w-[560px]">
-        <form wire:submit="saveTask" class="space-y-5">
+        <form wire:submit.prevent="saveTask" class="space-y-5">
             <div>
                 <flux:heading size="lg" class="font-bold">
                     {{ $isEditing ? __('Edit Task') : __('Add New Task') }}
                 </flux:heading>
                 <flux:text class="text-xs text-zinc-500">
-                    {{ $isEditing ? __('Update task title, description, assigned user, priority, status, and due date.') : __('Fill in task details, assign a team member, set priority, status, and due date.') }}
+                    {{ $isEditing ? __('Update task title, description, assigned user, priority, status, and due date.') : __('Fill in all required task details, select the responsible team member, priority, status, and due date.') }}
                 </flux:text>
             </div>
 
             {{-- Task Title --}}
-            <flux:input
-                wire:model="title"
-                label="Task Title"
-                placeholder="Enter task title..."
-                required
-                autofocus
-            />
+            <div>
+                <flux:input
+                    wire:model.live.debounce.300ms="title"
+                    label="Task Title *"
+                    placeholder="Enter task title..."
+                    autofocus
+                />
+                @error('title')
+                    <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1.5 flex items-center gap-1">
+                        <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                        <span>{{ $message }}</span>
+                    </p>
+                @enderror
+            </div>
 
             {{-- Description --}}
-            <flux:textarea
-                wire:model="description"
-                label="Description"
-                placeholder="Enter detailed task description..."
-                rows="3"
-            />
+            <div>
+                <flux:textarea
+                    wire:model.live.debounce.300ms="description"
+                    label="Description"
+                    placeholder="Enter detailed task description..."
+                    rows="3"
+                />
+                @error('description')
+                    <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1.5 flex items-center gap-1">
+                        <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                        <span>{{ $message }}</span>
+                    </p>
+                @enderror
+            </div>
 
             {{-- Assigned To (User Dropdown) --}}
-            <flux:select wire:model="user_id" label="Assigned To" placeholder="Select team member">
-                <flux:select.option value="">Unassigned</flux:select.option>
-                @foreach ($this->users as $u)
-                    <flux:select.option value="{{ $u->id }}">{{ $u->name }}</flux:select.option>
-                @endforeach
-            </flux:select>
+            <div>
+                <flux:select wire:model.live="user_id" label="Assigned To *" placeholder="Select responsible team member">
+                    <flux:select.option value="">-- Select responsible team member --</flux:select.option>
+                    @foreach ($this->users as $u)
+                        <flux:select.option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }})</flux:select.option>
+                    @endforeach
+                </flux:select>
+                @error('user_id')
+                    <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1.5 flex items-center gap-1">
+                        <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                        <span>{{ $message }}</span>
+                    </p>
+                @enderror
+            </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {{-- Priority (Low, Medium, High) --}}
-                <flux:select wire:model="priority" label="Priority" required>
-                    <flux:select.option value="low">Low</flux:select.option>
-                    <flux:select.option value="medium">Medium</flux:select.option>
-                    <flux:select.option value="high">High</flux:select.option>
-                </flux:select>
+                <div>
+                    <flux:select wire:model.live="priority" label="Priority *">
+                        <flux:select.option value="low">Low</flux:select.option>
+                        <flux:select.option value="medium">Medium</flux:select.option>
+                        <flux:select.option value="high">High</flux:select.option>
+                    </flux:select>
+                    @error('priority')
+                        <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1 flex items-center gap-1">
+                            <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
+                </div>
 
                 {{-- Status (Pending, In Progress, Completed) --}}
-                <flux:select wire:model="status" label="Status" required>
-                    <flux:select.option value="pending">Pending</flux:select.option>
-                    <flux:select.option value="in_progress">In Progress</flux:select.option>
-                    <flux:select.option value="completed">Completed</flux:select.option>
-                </flux:select>
+                <div>
+                    <flux:select wire:model.live="status" label="Status *">
+                        <flux:select.option value="pending">Pending</flux:select.option>
+                        <flux:select.option value="in_progress">In Progress</flux:select.option>
+                        <flux:select.option value="completed">Completed</flux:select.option>
+                    </flux:select>
+                    @error('status')
+                        <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1 flex items-center gap-1">
+                            <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
+                </div>
 
                 {{-- Due Date --}}
-                <flux:input
-                    wire:model="due_date"
-                    type="date"
-                    label="Due Date"
-                    required
-                />
+                <div>
+                    <flux:input
+                        wire:model.live="due_date"
+                        type="date"
+                        label="Due Date *"
+                    />
+                    @error('due_date')
+                        <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 mt-1 flex items-center gap-1">
+                            <flux:icon name="exclamation-circle" class="size-3.5 shrink-0" />
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
+                </div>
             </div>
 
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-700">
