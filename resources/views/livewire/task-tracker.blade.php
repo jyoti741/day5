@@ -7,12 +7,22 @@
                     <flux:icon name="check-circle" class="size-6" />
                 </div>
                 <div>
-                    <flux:heading size="xl" class="font-bold tracking-tight text-zinc-900 dark:text-white">
-                        Task Management System
-                    </flux:heading>
-                    <flux:text class="text-xs text-zinc-500 dark:text-zinc-400">
-                        Create, assign, track priorities, deadlines, and completion of office tasks
-                    </flux:text>
+                    <div class="flex items-center gap-2">
+                        <flux:heading size="xl" class="font-bold tracking-tight text-zinc-900 dark:text-white">
+                            {{ config('office.company_name', 'ASTGD') }} {{ __('Task Management System') }}
+                        </flux:heading>
+                        <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+                            {{ config('office.app_name', 'ASTGD Task Tracker') }}
+                        </span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                        <span>Create, assign, track priorities, deadlines, and overdue office tasks</span>
+                        <span>&bull;</span>
+                        <a href="mailto:{{ config('office.company_email', 'office@example.com') }}" class="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:underline">
+                            <flux:icon name="envelope" class="size-3" />
+                            <span>{{ config('office.company_email', 'office@example.com') }}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,7 +54,38 @@
                     <flux:icon name="users" class="size-4" />
                     <span>Assigned Team</span>
                 </button>
+                <button
+                    type="button"
+                    wire:click="$set('activeView', 'overdue_report')"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition {{ $activeView === 'overdue_report' ? 'bg-rose-50 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 font-bold shadow-sm' : 'text-zinc-500 hover:text-rose-600 dark:hover:text-rose-400' }}"
+                >
+                    <flux:icon name="exclamation-triangle" class="size-4 text-rose-500" />
+                    <span>Overdue Report</span>
+                    @if ($this->metrics['overdue'] > 0)
+                        <span class="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-rose-500 text-white">
+                            {{ $this->metrics['overdue'] }}
+                        </span>
+                    @endif
+                </button>
             </div>
+
+            {{-- Export Tasks Dropdown (Feature Toggle) --}}
+            @if (config('office.enable_task_export', true))
+                <flux:dropdown position="bottom" align="end">
+                    <flux:button icon="arrow-down-tray" variant="subtle" class="cursor-pointer">
+                        Export Tasks
+                    </flux:button>
+
+                    <flux:menu>
+                        <flux:menu.item icon="document-text" wire:click="exportCsv">
+                            Export as CSV (.csv)
+                        </flux:menu.item>
+                        <flux:menu.item icon="code-bracket" wire:click="exportJson">
+                            Export as JSON (.json)
+                        </flux:menu.item>
+                    </flux:menu>
+                </flux:dropdown>
+            @endif
 
             <flux:button variant="primary" icon="plus" wire:click="openCreateModal" class="cursor-pointer shadow-sm">
                 Add New Task
@@ -66,7 +107,7 @@
                 <span class="text-3xl font-extrabold text-zinc-900 dark:text-white">{{ $this->metrics['total'] }}</span>
                 <span class="text-xs font-medium text-zinc-500">all tasks</span>
             </div>
-            <div class="mt-3 flex items-center gap-2">
+            <div class="mt-3">
                 <div class="w-full bg-zinc-100 dark:bg-zinc-800 h-1.5 rounded-full overflow-hidden">
                     <div class="bg-indigo-500 h-full rounded-full" style="width: 100%"></div>
                 </div>
@@ -130,24 +171,28 @@
             </div>
         </div>
 
-        {{-- High Priority Tasks --}}
-        <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 shadow-sm hover:border-rose-300/50 dark:hover:border-rose-700/50 transition">
+        {{-- Overdue Tasks Counter Card --}}
+        <button
+            type="button"
+            wire:click="$set('overdueFilter', '{{ $overdueFilter === 'overdue' ? 'all' : 'overdue' }}')"
+            class="text-start relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border p-5 shadow-sm transition cursor-pointer {{ $overdueFilter === 'overdue' ? 'ring-2 ring-rose-500 border-rose-500' : 'border-zinc-200 dark:border-zinc-800 hover:border-rose-300/50 dark:hover:border-rose-700/50' }}"
+        >
             <div class="flex items-center justify-between">
-                <flux:text class="text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400">High Priority</flux:text>
+                <flux:text class="text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400">Overdue Tasks</flux:text>
                 <div class="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-800/50">
-                    <flux:icon name="fire" class="size-5" />
+                    <flux:icon name="exclamation-triangle" class="size-5" />
                 </div>
             </div>
             <div class="mt-3 flex items-baseline gap-2">
-                <span class="text-3xl font-extrabold text-rose-600 dark:text-rose-400">{{ $this->metrics['high_priority'] }}</span>
-                <span class="text-xs font-medium text-rose-500">high priority</span>
+                <span class="text-3xl font-extrabold text-rose-600 dark:text-rose-400">{{ $this->metrics['overdue'] }}</span>
+                <span class="text-xs font-medium text-rose-500">{{ $overdueFilter === 'overdue' ? 'filtered' : 'past due' }}</span>
             </div>
             <div class="mt-3">
                 <div class="w-full bg-zinc-100 dark:bg-zinc-800 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-rose-500 h-full rounded-full" style="width: {{ $this->metrics['total'] > 0 ? ($this->metrics['high_priority'] / $this->metrics['total']) * 100 : 0 }}%"></div>
+                    <div class="bg-rose-500 h-full rounded-full" style="width: {{ $this->metrics['total'] > 0 ? ($this->metrics['overdue'] / $this->metrics['total']) * 100 : 0 }}%"></div>
                 </div>
             </div>
-        </div>
+        </button>
     </div>
 
     {{-- Filter and Search Control Bar --}}
@@ -181,6 +226,12 @@
                 <flux:select.option value="high">High</flux:select.option>
             </flux:select>
 
+            {{-- Overdue Filter Dropdown --}}
+            <flux:select wire:model.live="overdueFilter" class="min-w-[140px]" placeholder="Overdue Status">
+                <flux:select.option value="all">All Tasks</flux:select.option>
+                <flux:select.option value="overdue">Overdue Only</flux:select.option>
+            </flux:select>
+
             {{-- Assigned To Filter --}}
             <flux:select wire:model.live="assigneeFilter" class="min-w-[160px]" placeholder="Assigned To">
                 <flux:select.option value="all">All Assigned Users</flux:select.option>
@@ -200,7 +251,7 @@
             </flux:select>
 
             {{-- Reset Filters Button (when any filter is active) --}}
-            @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+            @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $overdueFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
                 <button
                     type="button"
                     wire:click="resetFilters"
@@ -215,7 +266,7 @@
     </div>
 
     {{-- Active Filter Pills --}}
-    @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+    @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $overdueFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
         <div class="flex flex-wrap items-center gap-2 text-xs">
             <span class="text-zinc-400 font-medium">Active Filters:</span>
 
@@ -232,6 +283,15 @@
                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
                     <span>Priority: <strong>{{ ucfirst($priorityFilter) }}</strong></span>
                     <button type="button" wire:click="$set('priorityFilter', 'all')" class="hover:text-rose-600 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
+            @endif
+
+            @if ($overdueFilter === 'overdue')
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border border-rose-200 dark:border-rose-800 font-bold">
+                    <span>Filter: <strong>Overdue Tasks Only</strong></span>
+                    <button type="button" wire:click="$set('overdueFilter', 'all')" class="hover:text-rose-800 cursor-pointer">
                         <flux:icon name="x-mark" class="size-3" />
                     </button>
                 </span>
@@ -268,14 +328,14 @@
                             <th class="py-3.5 px-4 text-start">Assigned To</th>
                             <th class="py-3.5 px-4 text-start">Priority</th>
                             <th class="py-3.5 px-4 text-start">Status</th>
-                            <th class="py-3.5 px-4 text-start">Due Date</th>
+                            <th class="py-3.5 px-4 text-start">Due Date & Overdue</th>
                             <th class="py-3.5 px-4 text-start">Created Date</th>
                             <th class="py-3.5 px-4 text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
                         @forelse ($tasks as $task)
-                            <tr class="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition group">
+                            <tr class="transition group {{ $task->isOverdue() ? 'bg-rose-50/30 dark:bg-rose-950/20 hover:bg-rose-50/60 dark:hover:bg-rose-950/40' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40' }}">
                                 {{-- Task Title & Description --}}
                                 <td class="py-4 px-4 align-top max-w-sm">
                                     <div class="flex items-start gap-3">
@@ -283,7 +343,7 @@
                                         <button
                                             type="button"
                                             wire:click="updateTaskStatus({{ $task->id }}, '{{ $task->status === 'completed' ? 'in_progress' : 'completed' }}')"
-                                            class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border transition cursor-pointer {{ $task->status === 'completed' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-zinc-300 dark:border-zinc-600 hover:border-emerald-500' }}"
+                                            class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border transition cursor-pointer {{ $task->status === 'completed' ? 'bg-emerald-500 border-emerald-500 text-white' : ($task->isOverdue() ? 'border-rose-400 hover:border-emerald-500' : 'border-zinc-300 dark:border-zinc-600 hover:border-emerald-500') }}"
                                             title="{{ $task->status === 'completed' ? 'Mark In Progress' : 'Mark Completed' }}"
                                         >
                                             @if ($task->status === 'completed')
@@ -292,9 +352,19 @@
                                         </button>
 
                                         <div class="space-y-1">
-                                            <span class="font-semibold text-zinc-900 dark:text-zinc-100 {{ $task->status === 'completed' ? 'line-through text-zinc-400 dark:text-zinc-500' : '' }}">
-                                                {{ $task->title }}
-                                            </span>
+                                            <div class="flex items-center gap-2 flex-wrap">
+                                                <span class="font-semibold text-zinc-900 dark:text-zinc-100 {{ $task->status === 'completed' ? 'line-through text-zinc-400 dark:text-zinc-500' : '' }}">
+                                                    {{ $task->title }}
+                                                </span>
+
+                                                {{-- Separate OVERDUE Badge (Visible immediately) --}}
+                                                @if ($task->isOverdue())
+                                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                                        <span class="size-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+                                                        OVERDUE ({{ $task->daysOverdue() }}d)
+                                                    </span>
+                                                @endif
+                                            </div>
                                             @if ($task->description)
                                                 <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2">
                                                     {{ $task->description }}
@@ -377,22 +447,22 @@
                                     </flux:dropdown>
                                 </td>
 
-                                {{-- Due Date --}}
+                                {{-- Due Date & Overdue Visual Indication --}}
                                 <td class="py-4 px-4 align-top whitespace-nowrap">
                                     @if ($task->due_date)
-                                        <div class="space-y-0.5">
-                                            <div class="flex items-center gap-1.5 text-xs font-medium text-zinc-800 dark:text-zinc-200">
-                                                <flux:icon name="calendar" class="size-3.5 text-zinc-400" />
+                                        <div class="space-y-1">
+                                            <div class="flex items-center gap-1.5 text-xs font-medium {{ $task->isOverdue() ? 'text-rose-700 dark:text-rose-300 font-bold' : 'text-zinc-800 dark:text-zinc-200' }}">
+                                                <flux:icon name="calendar" class="size-3.5 {{ $task->isOverdue() ? 'text-rose-500' : 'text-zinc-400' }}" />
                                                 <span>{{ $task->due_date->format('M d, Y') }}</span>
                                             </div>
                                             @if ($task->status === 'completed')
-                                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 font-medium">
                                                     Done {{ $task->completed_at ? $task->completed_at->diffForHumans() : '' }}
                                                 </span>
                                             @elseif ($task->isOverdue())
                                                 <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-800">
-                                                    <flux:icon name="exclamation-triangle" class="size-3" />
-                                                    Overdue by {{ $task->due_date->diffInDays(now()) }}d
+                                                    <flux:icon name="exclamation-triangle" class="size-3 text-rose-600" />
+                                                    Overdue by {{ $task->daysOverdue() }}d
                                                 </span>
                                             @elseif ($task->due_date->isToday())
                                                 <span class="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
@@ -462,8 +532,8 @@
                                     <div class="flex flex-col items-center justify-center gap-2">
                                         <flux:icon name="inbox" class="size-10 text-zinc-300 dark:text-zinc-600" />
                                         <p class="font-semibold text-zinc-700 dark:text-zinc-300">No tasks found matching selected criteria</p>
-                                        <p class="text-xs text-zinc-400">Try adjusting your Status or Priority filter options, or clear them to see all tasks.</p>
-                                        @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+                                        <p class="text-xs text-zinc-400">Try adjusting your Status, Priority, or Overdue filter options.</p>
+                                        @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $overdueFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
                                             <button
                                                 type="button"
                                                 wire:click="resetFilters"
@@ -505,22 +575,19 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     @forelse ($allTasksForBoard->where('status', 'pending') as $bTask)
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700/80 shadow-sm space-y-3 hover:shadow-md transition">
-                            <div class="flex items-start justify-between gap-2">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
+                            <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
-                                <div class="flex items-center gap-1">
-                                    <button
-                                        type="button"
-                                        wire:click="openViewModal({{ $bTask->id }})"
-                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
-                                        title="View Details"
-                                    >
-                                        <flux:icon name="eye" class="size-3.5" />
-                                    </button>
+
+                                @if ($bTask->isOverdue())
+                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
+                                        OVERDUE ({{ $bTask->daysOverdue() }}d)
+                                    </span>
+                                @else
                                     <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
-                                </div>
+                                @endif
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-900 dark:text-white leading-snug">{{ $bTask->title }}</h4>
                             @if ($bTask->description)
@@ -537,14 +604,24 @@
                                         <span class="text-zinc-400 italic">Unassigned</span>
                                     @endif
                                 </div>
-                                <button
-                                    type="button"
-                                    wire:click="updateTaskStatus({{ $bTask->id }}, 'in_progress')"
-                                    class="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 cursor-pointer"
-                                >
-                                    <span>Start</span>
-                                    <flux:icon name="arrow-right" class="size-3" />
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        wire:click="updateTaskStatus({{ $bTask->id }}, 'in_progress')"
+                                        class="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 cursor-pointer"
+                                    >
+                                        <span>Start</span>
+                                        <flux:icon name="arrow-right" class="size-3" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -567,22 +644,19 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     @forelse ($allTasksForBoard->where('status', 'in_progress') as $bTask)
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700/80 shadow-sm space-y-3 hover:shadow-md transition">
-                            <div class="flex items-start justify-between gap-2">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
+                            <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
-                                <div class="flex items-center gap-1">
-                                    <button
-                                        type="button"
-                                        wire:click="openViewModal({{ $bTask->id }})"
-                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
-                                        title="View Details"
-                                    >
-                                        <flux:icon name="eye" class="size-3.5" />
-                                    </button>
+
+                                @if ($bTask->isOverdue())
+                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
+                                        OVERDUE ({{ $bTask->daysOverdue() }}d)
+                                    </span>
+                                @else
                                     <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
-                                </div>
+                                @endif
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-900 dark:text-white leading-snug">{{ $bTask->title }}</h4>
                             @if ($bTask->description)
@@ -599,14 +673,24 @@
                                         <span class="text-zinc-400 italic">Unassigned</span>
                                     @endif
                                 </div>
-                                <button
-                                    type="button"
-                                    wire:click="updateTaskStatus({{ $bTask->id }}, 'completed')"
-                                    class="text-xs text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1 cursor-pointer"
-                                >
-                                    <span>Complete</span>
-                                    <flux:icon name="check" class="size-3" />
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        wire:click="updateTaskStatus({{ $bTask->id }}, 'completed')"
+                                        class="text-xs text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1 cursor-pointer"
+                                    >
+                                        <span>Complete</span>
+                                        <flux:icon name="check" class="size-3" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -615,7 +699,7 @@
                 </div>
             </div>
 
-            {{-- Column: Completed --}}
+            {{-- Column: Completed (Never Overdue) --}}
             <div class="flex flex-col gap-4 bg-zinc-50/75 dark:bg-zinc-900/60 p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800">
                 <div class="flex items-center justify-between pb-2 border-b border-emerald-200 dark:border-emerald-900/50">
                     <div class="flex items-center gap-2">
@@ -634,17 +718,7 @@
                                 <span class="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
                                     <flux:icon name="check" class="size-3" /> Completed
                                 </span>
-                                <div class="flex items-center gap-1">
-                                    <button
-                                        type="button"
-                                        wire:click="openViewModal({{ $bTask->id }})"
-                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
-                                        title="View Details"
-                                    >
-                                        <flux:icon name="eye" class="size-3.5" />
-                                    </button>
-                                    <span class="text-[10px] text-zinc-400">Done {{ $bTask->completed_at ? $bTask->completed_at->format('M d') : '' }}</span>
-                                </div>
+                                <span class="text-[10px] text-zinc-400">Done {{ $bTask->completed_at ? $bTask->completed_at->format('M d') : '' }}</span>
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-700 dark:text-zinc-300 line-through leading-snug">{{ $bTask->title }}</h4>
                             <div class="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-700 text-xs">
@@ -656,13 +730,23 @@
                                         <span class="text-zinc-500 font-medium truncate max-w-[100px]">{{ $bTask->assignee->name }}</span>
                                     @endif
                                 </div>
-                                <button
-                                    type="button"
-                                    wire:click="updateTaskStatus({{ $bTask->id }}, 'in_progress')"
-                                    class="text-xs text-zinc-400 hover:text-zinc-600 font-medium cursor-pointer"
-                                >
-                                    Reopen
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        wire:click="updateTaskStatus({{ $bTask->id }}, 'in_progress')"
+                                        class="text-xs text-zinc-400 hover:text-zinc-600 font-medium cursor-pointer"
+                                    >
+                                        Reopen
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -724,12 +808,204 @@
                 </div>
             @endforeach
         </div>
+
+    {{-- VIEW MODE 4: Monthly Overdue Report --}}
+    @elseif ($activeView === 'overdue_report')
+        <div class="space-y-6">
+            {{-- Report Header with Month Selector --}}
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div class="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400">
+                            <flux:icon name="chart-pie" class="size-6" />
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-zinc-900 dark:text-white">
+                                Monthly Overdue Report
+                            </h3>
+                            <p class="text-xs text-zinc-500">
+                                Comprehensive audit of tasks past their deadline for {{ $this->monthlyOverdueReport['month_label'] }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Month Selector & Export Button --}}
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-semibold text-zinc-600 dark:text-zinc-400 whitespace-nowrap">Select Month:</label>
+                        <flux:select wire:model.live="selectedReportMonth" class="min-w-[180px]">
+                            @foreach ($this->availableReportMonths as $val => $label)
+                                <flux:select.option value="{{ $val }}">{{ $label }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+
+                    @if (config('office.enable_task_export', true))
+                        <flux:button
+                            variant="subtle"
+                            icon="arrow-down-tray"
+                            wire:click="exportOverdueReportCsv"
+                            class="cursor-pointer text-xs"
+                        >
+                            Export Report (CSV)
+                        </flux:button>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Overdue Report KPI Cards --}}
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-center">
+                    <span class="text-3xl font-extrabold text-rose-700 dark:text-rose-300">
+                        {{ $this->monthlyOverdueReport['total_overdue'] }}
+                    </span>
+                    <p class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mt-1">Total Overdue Tasks</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <span class="text-2xl font-bold text-rose-600">
+                        {{ $this->monthlyOverdueReport['high_priority_count'] }}
+                    </span>
+                    <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider mt-1">High Priority Overdue</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <span class="text-2xl font-bold text-sky-600">
+                        {{ $this->monthlyOverdueReport['medium_priority_count'] }}
+                    </span>
+                    <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider mt-1">Medium Priority Overdue</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <span class="text-2xl font-bold text-zinc-600 dark:text-zinc-300">
+                        {{ $this->monthlyOverdueReport['low_priority_count'] }}
+                    </span>
+                    <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider mt-1">Low Priority Overdue</p>
+                </div>
+            </div>
+
+            {{-- Monthly Overdue Tasks Table --}}
+            <div class="overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <div class="p-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                    <h4 class="font-bold text-sm text-zinc-900 dark:text-white">
+                        Overdue Task Records for {{ $this->monthlyOverdueReport['month_label'] }}
+                    </h4>
+                    <span class="text-xs font-medium text-zinc-400">
+                        {{ $this->monthlyOverdueReport['total_overdue'] }} record(s)
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-start text-sm">
+                        <thead>
+                            <tr class="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/75 dark:bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                                <th class="py-3.5 px-4 text-start">Task Title</th>
+                                <th class="py-3.5 px-4 text-start">Assigned To</th>
+                                <th class="py-3.5 px-4 text-start">Priority</th>
+                                <th class="py-3.5 px-4 text-start">Status</th>
+                                <th class="py-3.5 px-4 text-start">Due Date</th>
+                                <th class="py-3.5 px-4 text-start">Days Overdue</th>
+                                <th class="py-3.5 px-4 text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
+                            @forelse ($this->monthlyOverdueReport['tasks'] as $oTask)
+                                <tr class="hover:bg-rose-50/30 dark:hover:bg-rose-950/20 transition">
+                                    {{-- Task Title --}}
+                                    <td class="py-4 px-4 align-middle font-semibold text-zinc-900 dark:text-white">
+                                        {{ $oTask->title }}
+                                    </td>
+
+                                    {{-- Assigned To --}}
+                                    <td class="py-4 px-4 align-middle whitespace-nowrap">
+                                        @if ($oTask->assignee)
+                                            <div class="flex items-center gap-2">
+                                                <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white text-xs font-bold">
+                                                    {{ $oTask->assignee->initials() }}
+                                                </div>
+                                                <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{{ $oTask->assignee->name }}</span>
+                                            </div>
+                                        @else
+                                            <span class="text-xs text-zinc-400 italic">Unassigned</span>
+                                        @endif
+                                    </td>
+
+                                    {{-- Priority --}}
+                                    <td class="py-4 px-4 align-middle whitespace-nowrap">
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $oTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($oTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700') }}">
+                                            {{ ucfirst($oTask->priority) }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Status --}}
+                                    <td class="py-4 px-4 align-middle whitespace-nowrap">
+                                        <span class="px-2.5 py-0.5 rounded-lg text-xs font-semibold {{ $oTask->status === 'in_progress' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700' }}">
+                                            {{ ucfirst(str_replace('_', ' ', $oTask->status)) }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Due Date --}}
+                                    <td class="py-4 px-4 align-middle whitespace-nowrap text-xs font-bold text-rose-600 dark:text-rose-400">
+                                        {{ $oTask->due_date->format('M d, Y') }}
+                                    </td>
+
+                                    {{-- Number of Days Overdue --}}
+                                    <td class="py-4 px-4 align-middle whitespace-nowrap">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 shadow-xs">
+                                            <flux:icon name="clock" class="size-3.5 text-rose-600" />
+                                            <span>{{ $oTask->daysOverdue() }} days overdue</span>
+                                        </span>
+                                    </td>
+
+                                    {{-- Action --}}
+                                    <td class="py-4 px-4 align-middle text-end whitespace-nowrap">
+                                        <button
+                                            type="button"
+                                            wire:click="openViewModal({{ $oTask->id }})"
+                                            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 transition cursor-pointer"
+                                        >
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="py-12 text-center text-zinc-500">
+                                        <div class="flex flex-col items-center justify-center gap-2">
+                                            <flux:icon name="check-badge" class="size-10 text-emerald-500" />
+                                            <p class="font-bold text-zinc-800 dark:text-zinc-200">No overdue tasks found for {{ $this->monthlyOverdueReport['month_label'] }}!</p>
+                                            <p class="text-xs text-zinc-400">All tasks due in this month were completed or are within deadline.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     @endif
 
-    {{-- VIEW TASK DETAILS MODAL --}}
+    {{-- VIEW TASK DETAILS MODAL (With Prominent Overdue Warning) --}}
     <flux:modal wire:model="showViewModal" class="md:w-[620px]">
         @if ($this->viewingTask)
             <div class="space-y-6">
+                {{-- Overdue Alert Banner (if overdue) --}}
+                @if ($this->viewingTask->isOverdue())
+                    <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 text-rose-900 dark:text-rose-200 flex items-start gap-3 shadow-xs">
+                        <flux:icon name="exclamation-triangle" class="size-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+                        <div class="text-xs space-y-0.5">
+                            <p class="font-black text-rose-700 dark:text-rose-300 uppercase tracking-wider">
+                                OVERDUE TASK WARNING
+                            </p>
+                            <p>
+                                This task was due on <strong>{{ $this->viewingTask->due_date->format('F d, Y') }}</strong> and is currently <strong>{{ $this->viewingTask->daysOverdue() }} days past deadline</strong>. Status is still <em>{{ ucfirst(str_replace('_', ' ', $this->viewingTask->status)) }}</em>.
+                            </p>
+                        </div>
+                    </div>
+                @endif
+
                 {{-- Modal Header --}}
                 <div class="flex items-start justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
                     <div class="space-y-1">
@@ -748,6 +1024,13 @@
                                    'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800') }}">
                                 {{ ucfirst(str_replace('_', ' ', $this->viewingTask->status)) }}
                             </span>
+
+                            @if ($this->viewingTask->isOverdue())
+                                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-xs">
+                                    <flux:icon name="clock" class="size-3" />
+                                    OVERDUE
+                                </span>
+                            @endif
                         </div>
                         <flux:heading size="xl" class="font-bold text-zinc-900 dark:text-white leading-tight">
                             {{ $this->viewingTask->title }}
@@ -784,19 +1067,21 @@
                     </div>
 
                     {{-- Due Date & Overdue Info --}}
-                    <div class="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-1.5">
-                        <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Due Date</flux:text>
+                    <div class="p-3.5 rounded-xl border {{ $this->viewingTask->isOverdue() ? 'border-rose-300 dark:border-rose-800 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900' }} space-y-1.5">
+                        <flux:text class="text-xs font-semibold uppercase tracking-wider {{ $this->viewingTask->isOverdue() ? 'text-rose-600 font-bold' : 'text-zinc-400' }}">
+                            Due Date
+                        </flux:text>
                         <div class="pt-1 space-y-1">
                             @if ($this->viewingTask->due_date)
-                                <div class="flex items-center gap-2 font-semibold text-zinc-900 dark:text-white">
-                                    <flux:icon name="calendar" class="size-4 text-indigo-500" />
+                                <div class="flex items-center gap-2 font-semibold {{ $this->viewingTask->isOverdue() ? 'text-rose-700 dark:text-rose-300' : 'text-zinc-900 dark:text-white' }}">
+                                    <flux:icon name="calendar" class="size-4 {{ $this->viewingTask->isOverdue() ? 'text-rose-500' : 'text-indigo-500' }}" />
                                     <span>{{ $this->viewingTask->due_date->format('F d, Y') }}</span>
                                 </div>
                                 @if ($this->viewingTask->status === 'completed')
                                     <span class="text-xs text-emerald-600 font-medium">Completed on {{ $this->viewingTask->completed_at ? $this->viewingTask->completed_at->format('M d, Y') : '-' }}</span>
                                 @elseif ($this->viewingTask->isOverdue())
-                                    <span class="text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800 inline-block">
-                                        Overdue by {{ $this->viewingTask->due_date->diffInDays(now()) }} days
+                                    <span class="text-xs font-black text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded border border-rose-300 dark:border-rose-700 inline-block">
+                                        Overdue by {{ $this->viewingTask->daysOverdue() }} days
                                     </span>
                                 @else
                                     <span class="text-xs text-zinc-500">Remaining: {{ $this->viewingTask->due_date->diffForHumans(null, true) }} left</span>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ __('Welcome') }} - {{ config('app.name', 'Laravel') }}</title>
+        <title>{{ __('Welcome') }} - {{ config('office.app_name', config('app.name', 'ASTGD Task Tracker')) }}</title>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -195,8 +195,8 @@
             </main>
         </div>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+        <div class="w-full lg:max-w-4xl max-w-[335px] mt-8">
+            @include('partials.footer')
+        </div>
     </body>
 </html>

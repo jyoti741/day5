@@ -7,23 +7,54 @@
                     <flux:icon name="chart-bar-square" class="size-6" />
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-wrap">
                         <flux:heading size="xl" class="font-extrabold tracking-tight text-zinc-900 dark:text-white">
-                            ASTGD Office Dashboard
+                            {{ config('office.company_name', 'ASTGD') }} {{ __('Office Dashboard') }}
                         </flux:heading>
                         <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                             <span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                             Live Tracker
                         </span>
                     </div>
-                    <flux:text class="text-xs text-zinc-500 dark:text-zinc-400">
-                        Click on any metric card or tab below to inspect pending, in progress, completed, or high priority tasks
-                    </flux:text>
+                    <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                        <span class="font-semibold text-zinc-800 dark:text-zinc-200 flex items-center gap-1">
+                            <flux:icon name="building-office-2" class="size-3.5 text-indigo-500" />
+                            <span>{{ config('office.company_name', 'ASTGD') }}</span>
+                        </span>
+                        <span>&bull;</span>
+                        <a href="mailto:{{ config('office.company_email', 'office@example.com') }}" class="inline-flex items-center gap-1 font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+                            <flux:icon name="envelope" class="size-3" />
+                            <span>{{ config('office.company_email', 'office@example.com') }}</span>
+                        </a>
+                        <span>&bull;</span>
+                        <span class="text-zinc-400">{{ config('office.app_name', config('app.name', 'ASTGD Task Tracker')) }}</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-xs">
+                <span class="text-zinc-400">Company:</span>
+                <span class="font-bold text-zinc-800 dark:text-zinc-200">{{ config('office.company_name', 'ASTGD') }}</span>
+                <span class="text-zinc-300 dark:text-zinc-600">|</span>
+                <a href="mailto:{{ config('office.company_email', 'office@example.com') }}" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 font-medium">
+                    <flux:icon name="envelope" class="size-3" />
+                    <span>{{ config('office.company_email', 'office@example.com') }}</span>
+                </a>
+            </div>
+
+            @if (config('office.enable_task_export', true))
+                <flux:button
+                    icon="arrow-down-tray"
+                    variant="subtle"
+                    wire:click="exportCsv"
+                    class="cursor-pointer"
+                >
+                    Export Tasks (CSV)
+                </flux:button>
+            @endif
+
             <a
                 href="{{ route('tasks') }}"
                 wire:navigate
@@ -146,6 +177,294 @@
                 <flux:icon name="chevron-right" class="size-3.5" />
             </div>
         </button>
+    </div>
+
+    {{-- 1. Task Statistics Section --}}
+    <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-100 dark:border-zinc-800">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                    <flux:icon name="chart-pie" class="size-6" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg text-zinc-900 dark:text-white">Task Statistics</h3>
+                    <p class="text-xs text-zinc-500">Live breakdown and percentage of tasks by current status</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs">
+                <span class="font-medium text-zinc-500">Total:</span>
+                <span class="font-bold px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white">
+                    {{ $this->taskStatistics['total'] }} Tasks
+                </span>
+            </div>
+        </div>
+
+        {{-- Dynamic Progress Bar --}}
+        <div class="mt-5 space-y-2">
+            <div class="w-full h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
+                <div class="bg-emerald-500 h-full transition-all duration-500" style="width: {{ $this->taskStatistics['completed_percentage'] }}%" title="Completed: {{ $this->taskStatistics['completed_percentage'] }}%"></div>
+                <div class="bg-blue-500 h-full transition-all duration-500" style="width: {{ $this->taskStatistics['in_progress_percentage'] }}%" title="In Progress: {{ $this->taskStatistics['in_progress_percentage'] }}%"></div>
+                <div class="bg-amber-500 h-full transition-all duration-500" style="width: {{ $this->taskStatistics['pending_percentage'] }}%" title="Pending: {{ $this->taskStatistics['pending_percentage'] }}%"></div>
+            </div>
+
+            {{-- 3 Percentage Status Cards --}}
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
+                {{-- Completed --}}
+                <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Completed</span>
+                        <div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">
+                            {{ $this->taskStatistics['completed_percentage'] }}%
+                        </div>
+                        <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                            Completed: {{ $this->taskStatistics['completed_percentage'] }}% ({{ $this->taskStatistics['completed_count'] }} tasks)
+                        </span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
+                        <flux:icon name="check-circle" class="size-6" />
+                    </div>
+                </div>
+
+                {{-- In Progress --}}
+                <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/80 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wider">In Progress</span>
+                        <div class="text-2xl font-extrabold text-blue-700 dark:text-blue-300 mt-0.5">
+                            {{ $this->taskStatistics['in_progress_percentage'] }}%
+                        </div>
+                        <span class="text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                            In Progress: {{ $this->taskStatistics['in_progress_percentage'] }}% ({{ $this->taskStatistics['in_progress_count'] }} tasks)
+                        </span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                        <flux:icon name="arrow-path" class="size-6" />
+                    </div>
+                </div>
+
+                {{-- Pending --}}
+                <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/80 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Pending</span>
+                        <div class="text-2xl font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">
+                            {{ $this->taskStatistics['pending_percentage'] }}%
+                        </div>
+                        <span class="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+                            Pending: {{ $this->taskStatistics['pending_percentage'] }}% ({{ $this->taskStatistics['pending_count'] }} tasks)
+                        </span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">
+                        <flux:icon name="clock" class="size-6" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- 2 & 3: Due Soon & Recent Tasks Grid --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {{-- DUE SOON SECTION (Next 3 Days) --}}
+        <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden flex flex-col">
+            <div class="p-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-amber-50/40 dark:bg-amber-950/20">
+                <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-xl bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">
+                        <flux:icon name="calendar" class="size-5" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Due Soon</h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-white">Next 3 Days</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Tasks with upcoming deadlines from today through the next 3 days</p>
+                    </div>
+                </div>
+
+                <span class="font-bold text-xs px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300/60">
+                    {{ $this->dueSoonTasks->count() }} Upcoming
+                </span>
+            </div>
+
+            <div class="divide-y divide-zinc-200 dark:divide-zinc-800 flex-1">
+                @forelse ($this->dueSoonTasks as $task)
+                    <div class="p-4 hover:bg-amber-50/30 dark:hover:bg-amber-950/10 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1 min-w-0 flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4 class="font-semibold text-sm text-zinc-900 dark:text-white">
+                                    {{ $task->title }}
+                                </h4>
+                                {{-- Priority --}}
+                                @if ($task->priority === 'high')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200">
+                                        High
+                                    </span>
+                                @elseif ($task->priority === 'medium')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200">
+                                        Medium
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                        Low
+                                    </span>
+                                @endif
+
+                                {{-- Status --}}
+                                @if ($task->status === 'in_progress')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">
+                                        In Progress
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                                        Pending
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="flex items-center gap-2 text-xs text-zinc-500">
+                                @if ($task->assignee)
+                                    <span class="flex items-center gap-1 font-medium text-zinc-700 dark:text-zinc-300">
+                                        <flux:icon name="user" class="size-3 text-zinc-400" />
+                                        <span>{{ $task->assignee->name }}</span>
+                                    </span>
+                                @else
+                                    <span class="italic text-zinc-400">Unassigned</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 shrink-0">
+                            <div class="text-end">
+                                <span class="inline-flex items-center gap-1 font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
+                                    <flux:icon name="clock" class="size-3" />
+                                    <span>Due {{ $task->due_date ? $task->due_date->format('M d') : 'Soon' }}</span>
+                                </span>
+                            </div>
+
+                            <button
+                                type="button"
+                                wire:click="openViewModal({{ $task->id }})"
+                                class="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
+                                title="View Details"
+                            >
+                                <flux:icon name="eye" class="size-4" />
+                            </button>
+                        </div>
+                    </div>
+                @empty
+                    <div class="p-8 text-center text-zinc-500">
+                        <flux:icon name="check-badge" class="size-8 mx-auto text-emerald-500 mb-1.5" />
+                        <p class="font-semibold text-sm text-zinc-700 dark:text-zinc-300">No deadlines in the next 3 days</p>
+                        <p class="text-xs text-zinc-400 mt-0.5">All upcoming tasks have comfortable deadlines.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+
+        {{-- RECENT TASKS SECTION (Latest 5 Tasks) --}}
+        <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden flex flex-col">
+            <div class="p-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                        <flux:icon name="clock" class="size-5" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Recent Tasks</h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">Latest 5</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Recently created office tasks</p>
+                    </div>
+                </div>
+
+                <a
+                    href="{{ route('tasks', ['sortBy' => 'created_desc']) }}"
+                    wire:navigate
+                    class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+                >
+                    View All
+                </a>
+            </div>
+
+            <div class="divide-y divide-zinc-200 dark:divide-zinc-800 flex-1">
+                @forelse ($this->recentTasks as $task)
+                    <div class="p-4 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1 min-w-0 flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4 class="font-semibold text-sm text-zinc-900 dark:text-white {{ $task->status === 'completed' ? 'line-through text-zinc-400' : '' }}">
+                                    {{ $task->title }}
+                                </h4>
+                                {{-- Priority --}}
+                                @if ($task->priority === 'high')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200">
+                                        High
+                                    </span>
+                                @elseif ($task->priority === 'medium')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200">
+                                        Medium
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                        Low
+                                    </span>
+                                @endif
+                                {{-- Status --}}
+                                @if ($task->status === 'completed')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">
+                                        Completed
+                                    </span>
+                                @elseif ($task->status === 'in_progress')
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">
+                                        In Progress
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                                        Pending
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="flex items-center gap-3 text-xs text-zinc-500">
+                                @if ($task->assignee)
+                                    <span class="flex items-center gap-1 font-medium text-zinc-700 dark:text-zinc-300">
+                                        <flux:icon name="user" class="size-3 text-zinc-400" />
+                                        <span>{{ $task->assignee->name }}</span>
+                                    </span>
+                                @else
+                                    <span class="italic text-zinc-400">Unassigned</span>
+                                @endif
+                                <span>&bull;</span>
+                                <span class="text-zinc-400">Created {{ $task->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 shrink-0">
+                            <div class="text-end">
+                                @if ($task->due_date)
+                                    <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                                        Due {{ $task->due_date->format('M d') }}
+                                    </span>
+                                @else
+                                    <span class="text-xs text-zinc-400">No deadline</span>
+                                @endif
+                            </div>
+
+                            <button
+                                type="button"
+                                wire:click="openViewModal({{ $task->id }})"
+                                class="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
+                                title="View Details"
+                            >
+                                <flux:icon name="eye" class="size-4" />
+                            </button>
+                        </div>
+                    </div>
+                @empty
+                    <div class="p-8 text-center text-zinc-500">
+                        <flux:icon name="clipboard-document-list" class="size-8 mx-auto text-zinc-400 mb-1.5" />
+                        <p class="font-semibold text-sm text-zinc-700 dark:text-zinc-300">No tasks created yet</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
     </div>
 
     {{-- Main Content Grid --}}
@@ -383,6 +702,40 @@
                     >
                         Manage All Tasks
                     </a>
+                </div>
+            </div>
+
+            {{-- Company Information & Office Contact Section --}}
+            <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-5 shadow-sm space-y-4">
+                <div class="flex items-center gap-2 pb-3 border-b border-zinc-100 dark:border-zinc-800">
+                    <flux:icon name="building-office-2" class="size-5 text-indigo-500" />
+                    <div>
+                        <h3 class="font-bold text-base text-zinc-900 dark:text-white">Organization Info</h3>
+                        <p class="text-xs text-zinc-400">Company & office contact details</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/60 dark:border-zinc-800">
+                        <span class="text-zinc-500 dark:text-zinc-400 font-medium">Company</span>
+                        <span class="font-bold text-zinc-900 dark:text-white">{{ config('office.company_name', 'ASTGD') }}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/60 dark:border-zinc-800">
+                        <span class="text-zinc-500 dark:text-zinc-400 font-medium">Contact Email</span>
+                        <a
+                            href="mailto:{{ config('office.company_email', 'office@example.com') }}"
+                            class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                        >
+                            <flux:icon name="envelope" class="size-3" />
+                            <span>{{ config('office.company_email', 'office@example.com') }}</span>
+                        </a>
+                    </div>
+
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/60 dark:border-zinc-800">
+                        <span class="text-zinc-500 dark:text-zinc-400 font-medium">Application</span>
+                        <span class="font-semibold text-zinc-700 dark:text-zinc-300">{{ config('office.app_name', config('app.name', 'ASTGD Task Tracker')) }}</span>
+                    </div>
                 </div>
             </div>
         </div>

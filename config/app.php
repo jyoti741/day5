@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('OFFICE_APP_NAME', env('APP_NAME', 'ASTGD Task Tracker')),
 
     /*
     |--------------------------------------------------------------------------

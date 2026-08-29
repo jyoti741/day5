@@ -26,32 +26,49 @@ class TaskTracker extends Component
     #[Url(as: 'priority')]
     public string $priorityFilter = 'all'; // 'all', 'low', 'medium', 'high'
 
+    #[Url(as: 'overdue')]
+    public string $overdueFilter = 'all'; // 'all', 'overdue'
+
     #[Url(as: 'assignee')]
     public string $assigneeFilter = 'all'; // 'all', 'unassigned', or user ID
 
     public string $sortBy = 'deadline_asc'; // 'deadline_asc', 'deadline_desc', 'priority_desc', 'created_desc', 'created_asc'
-    public string $activeView = 'list'; // 'list', 'board', 'team'
+
+    public string $activeView = 'list'; // 'list', 'board', 'team', 'overdue_report'
+
+    // Monthly Overdue Report Month Selector
+    public string $selectedReportMonth = '';
 
     // Create / Edit Modal State
     public bool $showTaskModal = false;
+
     public bool $isEditing = false;
+
     public ?int $editingTaskId = null;
 
     // View Details Modal State
     public bool $showViewModal = false;
+
     public ?int $viewingTaskId = null;
 
     // Form fields
     public string $title = '';
+
     public string $description = '';
+
     public ?int $user_id = null; // Assigned To (Required)
+
     public string $priority = 'medium'; // 'low', 'medium', 'high'
+
     public string $status = 'pending'; // 'pending', 'in_progress', 'completed'
+
     public string $due_date = '';
 
     // Delete Modal State
     public bool $showDeleteModal = false;
+
     public ?int $deletingTaskId = null;
+
     public string $deletingTaskTitle = '';
 
     /**
@@ -93,6 +110,7 @@ class TaskTracker extends Component
     public function mount(): void
     {
         $this->due_date = Carbon::now()->addDays(3)->format('Y-m-d');
+        $this->selectedReportMonth = Carbon::now()->format('Y-m');
     }
 
     /**
@@ -118,6 +136,11 @@ class TaskTracker extends Component
         $this->resetPage();
     }
 
+    public function updatingOverdueFilter(): void
+    {
+        $this->resetPage();
+    }
+
     public function updatingAssigneeFilter(): void
     {
         $this->resetPage();
@@ -128,6 +151,7 @@ class TaskTracker extends Component
         $this->search = '';
         $this->statusFilter = 'all';
         $this->priorityFilter = 'all';
+        $this->overdueFilter = 'all';
         $this->assigneeFilter = 'all';
         $this->resetPage();
     }
@@ -166,7 +190,7 @@ class TaskTracker extends Component
         $this->priority = in_array($task->priority, ['low', 'medium', 'high']) ? $task->priority : 'high';
         $this->status = in_array($task->status, ['pending', 'in_progress', 'completed']) ? $task->status : 'pending';
         $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : Carbon::now()->format('Y-m-d');
-        
+
         $this->showViewModal = false;
         $this->showTaskModal = true;
     }
@@ -176,13 +200,11 @@ class TaskTracker extends Component
      */
     public function saveTask(): void
     {
-        // 1. Backend validation check (stops execution if invalid)
         $validated = $this->validate();
 
-        // 2. Database Insertion / Update
         if ($this->isEditing && $this->editingTaskId) {
             $task = Task::findOrFail($this->editingTaskId);
-            
+
             if ($validated['status'] === 'completed' && $task->status !== 'completed') {
                 $validated['completed_at'] = Carbon::now();
             } elseif ($validated['status'] !== 'completed') {
@@ -200,7 +222,6 @@ class TaskTracker extends Component
             Flux::toast(variant: 'success', text: __('New task created successfully.'));
         }
 
-        // 3. Reset state and close modal
         $this->showTaskModal = false;
         $this->reset(['title', 'description', 'editingTaskId', 'isEditing']);
     }
@@ -208,7 +229,7 @@ class TaskTracker extends Component
     // Quick Status Update
     public function updateTaskStatus(int $taskId, string $newStatus): void
     {
-        if (!in_array($newStatus, ['pending', 'in_progress', 'completed'])) {
+        if (! in_array($newStatus, ['pending', 'in_progress', 'completed'])) {
             return;
         }
 
@@ -221,13 +242,13 @@ class TaskTracker extends Component
         }
         $task->save();
 
-        Flux::toast(variant: 'success', text: __("Task status updated to :status.", ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
+        Flux::toast(variant: 'success', text: __('Task status updated to :status.', ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
     }
 
     // Quick Priority Update
     public function updateTaskPriority(int $taskId, string $newPriority): void
     {
-        if (!in_array($newPriority, ['low', 'medium', 'high'])) {
+        if (! in_array($newPriority, ['low', 'medium', 'high'])) {
             return;
         }
 
@@ -235,7 +256,7 @@ class TaskTracker extends Component
         $task->priority = $newPriority;
         $task->save();
 
-        Flux::toast(variant: 'success', text: __("Task priority set to :priority.", ['priority' => ucfirst($newPriority)]));
+        Flux::toast(variant: 'success', text: __('Task priority set to :priority.', ['priority' => ucfirst($newPriority)]));
     }
 
     // Delete Confirmation
@@ -265,9 +286,10 @@ class TaskTracker extends Component
     #[Computed]
     public function viewingTask(): ?Task
     {
-        if (!$this->viewingTaskId) {
+        if (! $this->viewingTaskId) {
             return null;
         }
+
         return Task::with(['assignee', 'creator'])->find($this->viewingTaskId);
     }
 
@@ -279,6 +301,7 @@ class TaskTracker extends Component
         $inProgress = Task::where('status', 'in_progress')->count();
         $completed = Task::where('status', 'completed')->count();
         $highPriority = Task::where('priority', 'high')->count();
+        $overdue = Task::overdue()->count();
 
         $completionRate = $total > 0 ? round(($completed / $total) * 100) : 0;
 
@@ -288,8 +311,55 @@ class TaskTracker extends Component
             'in_progress' => $inProgress,
             'completed' => $completed,
             'high_priority' => $highPriority,
+            'overdue' => $overdue,
             'completion_rate' => $completionRate,
         ];
+    }
+
+    /**
+     * Monthly Overdue Report Computation
+     */
+    #[Computed]
+    public function monthlyOverdueReport(): array
+    {
+        $monthStr = $this->selectedReportMonth ?: Carbon::today()->format('Y-m');
+        try {
+            $startOfMonth = Carbon::createFromFormat('Y-m', $monthStr)->startOfMonth();
+            $endOfMonth = (clone $startOfMonth)->endOfMonth();
+        } catch (\Exception $e) {
+            $startOfMonth = Carbon::today()->startOfMonth();
+            $endOfMonth = Carbon::today()->endOfMonth();
+        }
+
+        $overdueTasks = Task::with(['assignee', 'creator'])
+            ->where('status', '!=', 'completed')
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
+            ->where('due_date', '<', Carbon::today())
+            ->orderBy('due_date', 'asc')
+            ->get();
+
+        return [
+            'month_label' => $startOfMonth->format('F Y'),
+            'total_overdue' => $overdueTasks->count(),
+            'high_priority_count' => $overdueTasks->where('priority', 'high')->count(),
+            'medium_priority_count' => $overdueTasks->where('priority', 'medium')->count(),
+            'low_priority_count' => $overdueTasks->where('priority', 'low')->count(),
+            'tasks' => $overdueTasks,
+        ];
+    }
+
+    #[Computed]
+    public function availableReportMonths(): array
+    {
+        $months = [];
+        $current = Carbon::today()->startOfMonth();
+        for ($i = -6; $i <= 3; $i++) {
+            $m = (clone $current)->addMonths($i);
+            $months[$m->format('Y-m')] = $m->format('F Y');
+        }
+
+        return $months;
     }
 
     #[Computed]
@@ -303,37 +373,42 @@ class TaskTracker extends Component
     {
         return User::withCount([
             'assignedTasks as total_tasks_count',
-            'assignedTasks as pending_tasks_count' => fn($q) => $q->where('status', 'pending'),
-            'assignedTasks as in_progress_tasks_count' => fn($q) => $q->where('status', 'in_progress'),
-            'assignedTasks as completed_tasks_count' => fn($q) => $q->where('status', 'completed'),
+            'assignedTasks as pending_tasks_count' => fn ($q) => $q->where('status', 'pending'),
+            'assignedTasks as in_progress_tasks_count' => fn ($q) => $q->where('status', 'in_progress'),
+            'assignedTasks as completed_tasks_count' => fn ($q) => $q->where('status', 'completed'),
         ])->get();
     }
 
-    public function render()
+    protected function getFilteredTasksQuery()
     {
         $query = Task::with(['assignee', 'creator']);
 
         // Search Filter (Task Title, Description, and Assigned User's Name / Email)
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $term = trim($this->search);
             $query->where(function ($q) use ($term) {
-                $q->where('title', 'like', '%' . $term . '%')
-                  ->orWhere('description', 'like', '%' . $term . '%')
-                  ->orWhereHas('assignee', function ($userQuery) use ($term) {
-                      $userQuery->where('name', 'like', '%' . $term . '%')
-                                ->orWhere('email', 'like', '%' . $term . '%');
-                  });
+                $q->where('title', 'like', '%'.$term.'%')
+                    ->orWhere('description', 'like', '%'.$term.'%')
+                    ->orWhereHas('assignee', function ($userQuery) use ($term) {
+                        $userQuery->where('name', 'like', '%'.$term.'%')
+                            ->orWhere('email', 'like', '%'.$term.'%');
+                    });
             });
         }
 
-        // Status Filter
+        // Status Filter (All, Pending, In Progress, Completed)
         if ($this->statusFilter !== 'all') {
             $query->where('status', $this->statusFilter);
         }
 
-        // Priority Filter
+        // Priority Filter (All, Low, Medium, High)
         if ($this->priorityFilter !== 'all') {
             $query->where('priority', $this->priorityFilter);
+        }
+
+        // Overdue Filter
+        if ($this->overdueFilter === 'overdue') {
+            $query->overdue();
         }
 
         // Assigned To Filter
@@ -366,7 +441,152 @@ class TaskTracker extends Component
                 break;
         }
 
-        $tasks = $query->paginate(12);
+        return $query;
+    }
+
+    public function exportCsv()
+    {
+        if (! config('office.enable_task_export', true)) {
+            abort(403, 'Task export feature is currently disabled.');
+        }
+
+        $tasks = $this->getFilteredTasksQuery()->get();
+        $appName = str(config('office.app_name', 'tasks'))->slug()->toString();
+        $filename = "{$appName}-tasks-".now()->format('Y-m-d').'.csv';
+
+        return response()->streamDownload(function () use ($tasks) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, [
+                'Task ID',
+                'Task Title',
+                'Description',
+                'Assigned To',
+                'Assignee Email',
+                'Priority',
+                'Status',
+                'Due Date',
+                'Is Overdue',
+                'Completed Date',
+                'Created Date',
+            ]);
+
+            foreach ($tasks as $task) {
+                fputcsv($handle, [
+                    $task->id,
+                    $task->title,
+                    $task->description,
+                    ucfirst($task->priority),
+                    ucfirst(str_replace('_', ' ', $task->status)),
+                    $task->assignee ? $task->assignee->name : 'Unassigned',
+                    $task->assignee ? $task->assignee->email : '',
+                    $task->due_date ? $task->due_date->format('Y-m-d') : 'No deadline',
+                    $task->isOverdue() ? 'Yes' : 'No',
+                    $task->completed_at ? $task->completed_at->format('Y-m-d H:i:s') : '',
+                    $task->created_at->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fclose($handle);
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
+
+    public function exportJson()
+    {
+        if (! config('office.enable_task_export', true)) {
+            abort(403, 'Task export feature is currently disabled.');
+        }
+
+        $tasks = $this->getFilteredTasksQuery()->get();
+        $appName = str(config('office.app_name', 'tasks'))->slug()->toString();
+        $filename = "{$appName}-tasks-".now()->format('Y-m-d').'.json';
+
+        $data = [
+            'app_name' => config('office.app_name'),
+            'company_name' => config('office.company_name'),
+            'exported_at' => now()->toIso8601String(),
+            'total_tasks' => $tasks->count(),
+            'tasks' => $tasks->map(fn ($task) => [
+                'id' => $task->id,
+                'title' => $task->title,
+                'description' => $task->description,
+                'priority' => $task->priority,
+                'status' => $task->status,
+                'assignee' => $task->assignee ? [
+                    'id' => $task->assignee->id,
+                    'name' => $task->assignee->name,
+                    'email' => $task->assignee->email,
+                ] : null,
+                'due_date' => $task->due_date ? $task->due_date->format('Y-m-d') : null,
+                'is_overdue' => $task->isOverdue(),
+                'completed_at' => $task->completed_at ? $task->completed_at->toIso8601String() : null,
+                'created_at' => $task->created_at->toIso8601String(),
+            ]),
+        ];
+
+        return response()->streamDownload(function () use ($data) {
+            echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        }, $filename, [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
+
+    public function exportOverdueReportCsv()
+    {
+        if (! config('office.enable_task_export', true)) {
+            abort(403, 'Task export feature is currently disabled.');
+        }
+
+        $report = $this->monthlyOverdueReport();
+        $monthLabel = str($report['month_label'])->slug()->toString();
+        $filename = "overdue-report-{$monthLabel}.csv";
+
+        return response()->streamDownload(function () use ($report) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, [
+                'Month',
+                'Task ID',
+                'Title',
+                'Assigned To',
+                'Priority',
+                'Status',
+                'Due Date',
+                'Days Overdue',
+            ]);
+
+            foreach ($report['tasks'] as $task) {
+                fputcsv($handle, [
+                    $report['month_label'],
+                    $task->id,
+                    $task->title,
+                    $task->assignee ? $task->assignee->name : 'Unassigned',
+                    ucfirst($task->priority),
+                    ucfirst(str_replace('_', ' ', $task->status)),
+                    $task->due_date ? $task->due_date->format('Y-m-d') : '',
+                    $task->daysOverdue(),
+                ]);
+            }
+
+            fclose($handle);
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
+
+    public function render()
+    {
+        $query = $this->getFilteredTasksQuery();
+
+        $perPage = (int) config('office.tasks_per_page', 10);
+        if ($perPage <= 0) {
+            $perPage = 10;
+        }
+
+        $tasks = $query->paginate($perPage);
         $allTasksForBoard = $this->activeView === 'board' ? (clone $query)->limit(100)->get() : collect();
 
         return view('livewire.task-tracker', [

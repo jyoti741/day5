@@ -88,14 +88,38 @@ class Task extends Model
 
     public function scopeHighPriority($query)
     {
-        return $query->whereIn('priority', ['high', 'urgent']);
+        return $query->where('priority', 'high');
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->where('status', '!=', 'completed')
+            ->whereNotNull('due_date')
+            ->where('due_date', '<', Carbon::today());
     }
 
     /**
      * Check if task is overdue.
+     * Automatically calculated: due date has passed & status is not completed.
      */
     public function isOverdue(): bool
     {
-        return $this->due_date && $this->status !== 'completed' && $this->due_date->isPast();
+        if ($this->status === 'completed' || is_null($this->due_date)) {
+            return false;
+        }
+
+        return $this->due_date->startOfDay()->lt(Carbon::today());
+    }
+
+    /**
+     * Get the number of days the task is overdue.
+     */
+    public function daysOverdue(): int
+    {
+        if (! $this->isOverdue()) {
+            return 0;
+        }
+
+        return max(1, (int) Carbon::today()->diffInDays($this->due_date->startOfDay()));
     }
 }

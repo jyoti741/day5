@@ -15,6 +15,7 @@ class DashboardOverview extends Component
     public string $selectedStatusTab = 'pending';
 
     public bool $showViewModal = false;
+
     public ?int $viewingTaskId = null;
 
     public function selectStatusTab(string $tab): void
@@ -30,7 +31,7 @@ class DashboardOverview extends Component
 
     public function updateTaskStatus(int $taskId, string $newStatus): void
     {
-        if (!in_array($newStatus, ['pending', 'in_progress', 'completed'])) {
+        if (! in_array($newStatus, ['pending', 'in_progress', 'completed'])) {
             return;
         }
 
@@ -43,15 +44,16 @@ class DashboardOverview extends Component
         }
         $task->save();
 
-        Flux::toast(variant: 'success', text: __("Task status updated to :status.", ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
+        Flux::toast(variant: 'success', text: __('Task status updated to :status.', ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
     }
 
     #[Computed]
     public function viewingTask(): ?Task
     {
-        if (!$this->viewingTaskId) {
+        if (! $this->viewingTaskId) {
             return null;
         }
+
         return Task::with(['assignee', 'creator'])->find($this->viewingTaskId);
     }
 
@@ -86,6 +88,54 @@ class DashboardOverview extends Component
     }
 
     #[Computed]
+    public function taskStatistics(): array
+    {
+        $total = Task::count();
+        $completed = Task::where('status', 'completed')->count();
+        $inProgress = Task::where('status', 'in_progress')->count();
+        $pending = Task::where('status', 'pending')->count();
+
+        $completedPercentage = $total > 0 ? (int) round(($completed / $total) * 100) : 0;
+        $inProgressPercentage = $total > 0 ? (int) round(($inProgress / $total) * 100) : 0;
+        $pendingPercentage = $total > 0 ? (int) round(($pending / $total) * 100) : 0;
+
+        return [
+            'total' => $total,
+            'completed_count' => $completed,
+            'in_progress_count' => $inProgress,
+            'pending_count' => $pending,
+            'completed_percentage' => $completedPercentage,
+            'in_progress_percentage' => $inProgressPercentage,
+            'pending_percentage' => $pendingPercentage,
+        ];
+    }
+
+    #[Computed]
+    public function recentTasks()
+    {
+        return Task::with(['assignee'])
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->take(5)
+            ->get();
+    }
+
+    #[Computed]
+    public function dueSoonTasks()
+    {
+        $today = Carbon::today()->format('Y-m-d');
+        $threeDaysLater = Carbon::today()->addDays(3)->format('Y-m-d');
+
+        return Task::with(['assignee'])
+            ->where('status', '!=', 'completed')
+            ->whereNotNull('due_date')
+            ->whereDate('due_date', '>=', $today)
+            ->whereDate('due_date', '<=', $threeDaysLater)
+            ->orderBy('due_date', 'asc')
+            ->get();
+    }
+
+    #[Computed]
     public function filteredDashboardTasks()
     {
         $query = Task::with(['assignee']);
@@ -117,10 +167,59 @@ class DashboardOverview extends Component
     {
         return User::withCount([
             'assignedTasks as total_tasks_count',
-            'assignedTasks as pending_tasks_count' => fn($q) => $q->where('status', 'pending'),
-            'assignedTasks as in_progress_tasks_count' => fn($q) => $q->where('status', 'in_progress'),
-            'assignedTasks as completed_tasks_count' => fn($q) => $q->where('status', 'completed'),
+            'assignedTasks as pending_tasks_count' => fn ($q) => $q->where('status', 'pending'),
+            'assignedTasks as in_progress_tasks_count' => fn ($q) => $q->where('status', 'in_progress'),
+            'assignedTasks as completed_tasks_count' => fn ($q) => $q->where('status', 'completed'),
         ])->get();
+    }
+
+    public function exportCsv()
+    {
+        if (! config('office.enable_task_export', true)) {
+            abort(403, 'Task export feature is currently disabled.');
+        }
+
+        $tasks = Task::with(['assignee'])->latest('created_at')->get();
+        $appName = str(config('office.app_name', 'tasks'))->slug()->toString();
+        $filename = "{$appName}-all-tasks-".now()->format('Y-m-d').'.csv';
+
+        return response()->streamDownload(function () use ($tasks) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, [
+                'Task ID',
+                'Task Title',
+                'Description',
+                'Assigned To',
+                'Assignee Email',
+                'Priority',
+                'Status',
+                'Due Date',
+                'Is Overdue',
+                'Completed Date',
+                'Created Date',
+            ]);
+
+            foreach ($tasks as $task) {
+                fputcsv($handle, [
+                    $task->id,
+                    $task->title,
+                    $task->description,
+                    ucfirst($task->priority),
+                    ucfirst(str_replace('_', ' ', $task->status)),
+                    $task->assignee ? $task->assignee->name : 'Unassigned',
+                    $task->assignee ? $task->assignee->email : '',
+                    $task->due_date ? $task->due_date->format('Y-m-d') : 'No deadline',
+                    $task->isOverdue() ? 'Yes' : 'No',
+                    $task->completed_at ? $task->completed_at->format('Y-m-d H:i:s') : '',
+                    $task->created_at->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fclose($handle);
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
     }
 
     public function render()
