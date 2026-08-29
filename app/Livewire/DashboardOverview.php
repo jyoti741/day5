@@ -11,8 +11,16 @@ use Livewire\Component;
 
 class DashboardOverview extends Component
 {
+    // Interactive filter tab on dashboard: 'pending', 'in_progress', 'completed', 'high_priority', 'all'
+    public string $selectedStatusTab = 'pending';
+
     public bool $showViewModal = false;
     public ?int $viewingTaskId = null;
+
+    public function selectStatusTab(string $tab): void
+    {
+        $this->selectedStatusTab = $tab;
+    }
 
     public function openViewModal(int $taskId): void
     {
@@ -78,6 +86,33 @@ class DashboardOverview extends Component
     }
 
     #[Computed]
+    public function filteredDashboardTasks()
+    {
+        $query = Task::with(['assignee']);
+
+        switch ($this->selectedStatusTab) {
+            case 'pending':
+                $query->where('status', 'pending')->orderByRaw('due_date IS NULL, due_date ASC');
+                break;
+            case 'completed':
+                $query->where('status', 'completed')->latest('completed_at');
+                break;
+            case 'in_progress':
+                $query->where('status', 'in_progress')->orderByRaw('due_date IS NULL, due_date ASC');
+                break;
+            case 'high_priority':
+                $query->where('priority', 'high')->where('status', '!=', 'completed')->orderByRaw('due_date IS NULL, due_date ASC');
+                break;
+            case 'all':
+            default:
+                $query->latest('created_at');
+                break;
+        }
+
+        return $query->take(8)->get();
+    }
+
+    #[Computed]
     public function teamWorkload()
     {
         return User::withCount([
@@ -86,26 +121,6 @@ class DashboardOverview extends Component
             'assignedTasks as in_progress_tasks_count' => fn($q) => $q->where('status', 'in_progress'),
             'assignedTasks as completed_tasks_count' => fn($q) => $q->where('status', 'completed'),
         ])->get();
-    }
-
-    #[Computed]
-    public function highPriorityTasks()
-    {
-        return Task::with(['assignee'])
-            ->where('status', '!=', 'completed')
-            ->where('priority', 'high')
-            ->orderByRaw('due_date IS NULL, due_date ASC')
-            ->take(6)
-            ->get();
-    }
-
-    #[Computed]
-    public function recentTasks()
-    {
-        return Task::with(['assignee'])
-            ->latest('created_at')
-            ->take(6)
-            ->get();
     }
 
     public function render()

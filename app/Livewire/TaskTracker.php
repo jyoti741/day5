@@ -8,6 +8,7 @@ use Flux\Flux;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,11 +16,19 @@ class TaskTracker extends Component
 {
     use WithPagination;
 
-    // Filters & Search
+    // Filters & Search (Synchronized with URL query string)
+    #[Url(as: 'search')]
     public string $search = '';
+
+    #[Url(as: 'status')]
     public string $statusFilter = 'all'; // 'all', 'pending', 'in_progress', 'completed'
+
+    #[Url(as: 'priority')]
     public string $priorityFilter = 'all'; // 'all', 'low', 'medium', 'high'
+
+    #[Url(as: 'assignee')]
     public string $assigneeFilter = 'all'; // 'all', 'unassigned', or user ID
+
     public string $sortBy = 'deadline_asc'; // 'deadline_asc', 'deadline_desc', 'priority_desc', 'created_desc', 'created_asc'
     public string $activeView = 'list'; // 'list', 'board', 'team'
 
