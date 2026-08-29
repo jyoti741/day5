@@ -132,11 +132,6 @@ class TaskTracker extends Component
         $this->resetPage();
     }
 
-    public function updatingAssigneeFilter(): void
-    {
-        $this->resetPage();
-    }
-
     // View Modal Trigger
     public function openViewModal(int $taskId): void
     {
