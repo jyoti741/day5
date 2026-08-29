@@ -165,20 +165,20 @@
 
         {{-- Filter dropdowns --}}
         <div class="flex flex-wrap items-center gap-2">
-            {{-- Status Filter --}}
+            {{-- Status Filter (All, Pending, In Progress, Completed) --}}
             <flux:select wire:model.live="statusFilter" class="min-w-[130px]" placeholder="Status">
-                <flux:select.option value="all">All Status</flux:select.option>
+                <flux:select.option value="all">All</flux:select.option>
                 <flux:select.option value="pending">Pending</flux:select.option>
                 <flux:select.option value="in_progress">In Progress</flux:select.option>
                 <flux:select.option value="completed">Completed</flux:select.option>
             </flux:select>
 
-            {{-- Priority Filter (Low, Medium, High) --}}
+            {{-- Priority Filter (All, Low, Medium, High) --}}
             <flux:select wire:model.live="priorityFilter" class="min-w-[130px]" placeholder="Priority">
-                <flux:select.option value="all">All Priority</flux:select.option>
-                <flux:select.option value="high">High</flux:select.option>
-                <flux:select.option value="medium">Medium</flux:select.option>
+                <flux:select.option value="all">All</flux:select.option>
                 <flux:select.option value="low">Low</flux:select.option>
+                <flux:select.option value="medium">Medium</flux:select.option>
+                <flux:select.option value="high">High</flux:select.option>
             </flux:select>
 
             {{-- Assigned To Filter --}}
@@ -198,8 +198,64 @@
                 <flux:select.option value="created_asc">Created Date (Oldest)</flux:select.option>
                 <flux:select.option value="priority_desc">Priority (Highest)</flux:select.option>
             </flux:select>
+
+            {{-- Reset Filters Button (when any filter is active) --}}
+            @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+                <button
+                    type="button"
+                    wire:click="resetFilters"
+                    class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition cursor-pointer flex items-center gap-1"
+                    title="Reset all filters"
+                >
+                    <flux:icon name="x-mark" class="size-3.5" />
+                    <span>Reset Filters</span>
+                </button>
+            @endif
         </div>
     </div>
+
+    {{-- Active Filter Pills --}}
+    @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="text-zinc-400 font-medium">Active Filters:</span>
+
+            @if ($statusFilter !== 'all')
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+                    <span>Status: <strong>{{ ucfirst(str_replace('_', ' ', $statusFilter)) }}</strong></span>
+                    <button type="button" wire:click="$set('statusFilter', 'all')" class="hover:text-rose-600 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
+            @endif
+
+            @if ($priorityFilter !== 'all')
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+                    <span>Priority: <strong>{{ ucfirst($priorityFilter) }}</strong></span>
+                    <button type="button" wire:click="$set('priorityFilter', 'all')" class="hover:text-rose-600 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
+            @endif
+
+            @if ($assigneeFilter !== 'all')
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+                    <span>Assignee: <strong>{{ $assigneeFilter === 'unassigned' ? 'Unassigned' : ($this->users->find($assigneeFilter)->name ?? 'User') }}</strong></span>
+                    <button type="button" wire:click="$set('assigneeFilter', 'all')" class="hover:text-rose-600 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
+            @endif
+
+            @if (!empty($search))
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+                    <span>Search: "<strong>{{ $search }}</strong>"</span>
+                    <button type="button" wire:click="$set('search', '')" class="hover:text-rose-600 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
+            @endif
+        </div>
+    @endif
 
     {{-- VIEW MODE 1: Table / Task List View --}}
     @if ($activeView === 'list')
@@ -405,8 +461,17 @@
                                 <td colspan="7" class="py-12 text-center text-zinc-500">
                                     <div class="flex flex-col items-center justify-center gap-2">
                                         <flux:icon name="inbox" class="size-10 text-zinc-300 dark:text-zinc-600" />
-                                        <p class="font-semibold text-zinc-700 dark:text-zinc-300">No tasks found</p>
-                                        <p class="text-xs text-zinc-400">Try adjusting your filters or add a new task using the button above.</p>
+                                        <p class="font-semibold text-zinc-700 dark:text-zinc-300">No tasks found matching selected criteria</p>
+                                        <p class="text-xs text-zinc-400">Try adjusting your Status or Priority filter options, or clear them to see all tasks.</p>
+                                        @if ($statusFilter !== 'all' || $priorityFilter !== 'all' || $assigneeFilter !== 'all' || !empty($search))
+                                            <button
+                                                type="button"
+                                                wire:click="resetFilters"
+                                                class="mt-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 transition cursor-pointer"
+                                            >
+                                                Clear All Filters
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
