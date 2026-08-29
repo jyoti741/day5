@@ -17,11 +17,10 @@ class TaskTracker extends Component
 
     // Filters & Search
     public string $search = '';
-    public string $statusFilter = 'all';
-    public string $priorityFilter = 'all';
-    public string $assigneeFilter = 'all';
-    public string $categoryFilter = 'all';
-    public string $sortBy = 'deadline_asc';
+    public string $statusFilter = 'all'; // 'all', 'pending', 'in_progress', 'completed'
+    public string $priorityFilter = 'all'; // 'all', 'low', 'medium', 'high'
+    public string $assigneeFilter = 'all'; // 'all', 'unassigned', or user ID
+    public string $sortBy = 'deadline_asc'; // 'deadline_asc', 'deadline_desc', 'priority_desc', 'created_desc', 'created_asc'
     public string $activeView = 'list'; // 'list', 'board', 'team'
 
     // Create / Edit Modal State
@@ -29,13 +28,16 @@ class TaskTracker extends Component
     public bool $isEditing = false;
     public ?int $editingTaskId = null;
 
+    // View Details Modal State
+    public bool $showViewModal = false;
+    public ?int $viewingTaskId = null;
+
     // Form fields
     public string $title = '';
     public string $description = '';
-    public ?int $user_id = null;
-    public string $priority = 'medium';
-    public string $status = 'pending';
-    public string $category = 'Engineering';
+    public ?int $user_id = null; // Assigned To
+    public string $priority = 'medium'; // 'low', 'medium', 'high'
+    public string $status = 'pending'; // 'pending', 'in_progress', 'completed'
     public string $due_date = '';
 
     // Delete Modal State
@@ -49,12 +51,21 @@ class TaskTracker extends Component
             'title' => 'required|string|min:3|max:255',
             'description' => 'nullable|string|max:2000',
             'user_id' => 'nullable|exists:users,id',
-            'priority' => 'required|in:low,medium,high,urgent',
-            'status' => 'required|in:pending,in_progress,completed,cancelled',
-            'category' => 'required|string|max:100',
-            'due_date' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
+            'status' => 'required|in:pending,in_progress,completed',
+            'due_date' => 'required|date',
         ];
     }
+
+    protected $messages = [
+        'title.required' => 'Task Title is required.',
+        'title.min' => 'Task Title must be at least 3 characters.',
+        'priority.required' => 'Priority is required (Low, Medium, High).',
+        'priority.in' => 'Priority must be Low, Medium, or High.',
+        'status.required' => 'Status is required (Pending, In Progress, Completed).',
+        'status.in' => 'Status must be Pending, In Progress, or Completed.',
+        'due_date.required' => 'Due Date is required.',
+    ];
 
     public function mount(): void
     {
@@ -81,9 +92,11 @@ class TaskTracker extends Component
         $this->resetPage();
     }
 
-    public function updatingCategoryFilter(): void
+    // View Modal Trigger
+    public function openViewModal(int $taskId): void
     {
-        $this->resetPage();
+        $this->viewingTaskId = $taskId;
+        $this->showViewModal = true;
     }
 
     // Modal Triggers
@@ -97,7 +110,6 @@ class TaskTracker extends Component
         $this->user_id = Auth::id();
         $this->priority = 'medium';
         $this->status = 'pending';
-        $this->category = 'Engineering';
         $this->due_date = Carbon::now()->addDays(3)->format('Y-m-d');
         $this->showTaskModal = true;
     }
@@ -111,10 +123,12 @@ class TaskTracker extends Component
         $this->title = $task->title;
         $this->description = $task->description ?? '';
         $this->user_id = $task->user_id;
-        $this->priority = $task->priority;
-        $this->status = $task->status;
-        $this->category = $task->category;
-        $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : '';
+        $this->priority = in_array($task->priority, ['low', 'medium', 'high']) ? $task->priority : 'high';
+        $this->status = in_array($task->status, ['pending', 'in_progress', 'completed']) ? $task->status : 'pending';
+        $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        
+        // Close view modal if opening edit from view modal
+        $this->showViewModal = false;
         $this->showTaskModal = true;
     }
 
@@ -150,6 +164,10 @@ class TaskTracker extends Component
     // Quick Status Update
     public function updateTaskStatus(int $taskId, string $newStatus): void
     {
+        if (!in_array($newStatus, ['pending', 'in_progress', 'completed'])) {
+            return;
+        }
+
         $task = Task::findOrFail($taskId);
         $task->status = $newStatus;
         if ($newStatus === 'completed') {
@@ -159,17 +177,21 @@ class TaskTracker extends Component
         }
         $task->save();
 
-        Flux::toast(variant: 'success', text: __("Task status changed to :status.", ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
+        Flux::toast(variant: 'success', text: __("Task status updated to :status.", ['status' => ucfirst(str_replace('_', ' ', $newStatus))]));
     }
 
     // Quick Priority Update
     public function updateTaskPriority(int $taskId, string $newPriority): void
     {
+        if (!in_array($newPriority, ['low', 'medium', 'high'])) {
+            return;
+        }
+
         $task = Task::findOrFail($taskId);
         $task->priority = $newPriority;
         $task->save();
 
-        Flux::toast(variant: 'success', text: __("Task priority updated to :priority.", ['priority' => ucfirst($newPriority)]));
+        Flux::toast(variant: 'success', text: __("Task priority set to :priority.", ['priority' => ucfirst($newPriority)]));
     }
 
     // Delete Confirmation
@@ -197,17 +219,22 @@ class TaskTracker extends Component
 
     // Computed Properties
     #[Computed]
+    public function viewingTask(): ?Task
+    {
+        if (!$this->viewingTaskId) {
+            return null;
+        }
+        return Task::with(['assignee', 'creator'])->find($this->viewingTaskId);
+    }
+
+    #[Computed]
     public function metrics(): array
     {
         $total = Task::count();
         $pending = Task::where('status', 'pending')->count();
         $inProgress = Task::where('status', 'in_progress')->count();
         $completed = Task::where('status', 'completed')->count();
-        $highPriority = Task::whereIn('priority', ['high', 'urgent'])->count();
-        $overdue = Task::where('status', '!=', 'completed')
-            ->whereNotNull('due_date')
-            ->where('due_date', '<', Carbon::today())
-            ->count();
+        $highPriority = Task::where('priority', 'high')->count();
 
         $completionRate = $total > 0 ? round(($completed / $total) * 100) : 0;
 
@@ -217,7 +244,6 @@ class TaskTracker extends Component
             'in_progress' => $inProgress,
             'completed' => $completed,
             'high_priority' => $highPriority,
-            'overdue' => $overdue,
             'completion_rate' => $completionRate,
         ];
     }
@@ -226,12 +252,6 @@ class TaskTracker extends Component
     public function users()
     {
         return User::orderBy('name')->get();
-    }
-
-    #[Computed]
-    public function categories(): array
-    {
-        return ['Engineering', 'Design', 'Marketing', 'Operations', 'Security', 'Management', 'General'];
     }
 
     #[Computed]
@@ -249,7 +269,7 @@ class TaskTracker extends Component
     {
         $query = Task::with(['assignee', 'creator']);
 
-        // Search Filter
+        // Search Filter (Task Title & Description)
         if (!empty($this->search)) {
             $query->where(function ($q) {
                 $q->where('title', 'like', '%' . $this->search . '%')
@@ -267,7 +287,7 @@ class TaskTracker extends Component
             $query->where('priority', $this->priorityFilter);
         }
 
-        // Assignee Filter
+        // Assigned To Filter
         if ($this->assigneeFilter !== 'all') {
             if ($this->assigneeFilter === 'unassigned') {
                 $query->whereNull('user_id');
@@ -276,21 +296,20 @@ class TaskTracker extends Component
             }
         }
 
-        // Category Filter
-        if ($this->categoryFilter !== 'all') {
-            $query->where('category', $this->categoryFilter);
-        }
-
         // Sorting
         switch ($this->sortBy) {
             case 'deadline_desc':
                 $query->orderByRaw('due_date IS NULL, due_date DESC');
                 break;
             case 'priority_desc':
-                $query->orderByRaw("CASE priority WHEN 'urgent' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 WHEN 'low' THEN 4 ELSE 5 END");
+                $query->orderByRaw("CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 ELSE 4 END");
                 break;
+            case 'created_asc':
+                $query->oldest('created_at');
+                break;
+            case 'created_desc':
             case 'newest':
-                $query->latest();
+                $query->latest('created_at');
                 break;
             case 'deadline_asc':
             default:
@@ -298,7 +317,7 @@ class TaskTracker extends Component
                 break;
         }
 
-        $tasks = $query->paginate(15);
+        $tasks = $query->paginate(12);
         $allTasksForBoard = $this->activeView === 'board' ? (clone $query)->limit(100)->get() : collect();
 
         return view('livewire.task-tracker', [

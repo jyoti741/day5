@@ -365,9 +365,20 @@
                                     </div>
                                 </td>
 
-                                {{-- Actions --}}
+                                {{-- Actions (View, Edit, Delete) --}}
                                 <td class="py-4 px-4 align-top text-end whitespace-nowrap">
                                     <div class="flex items-center justify-end gap-1">
+                                        {{-- View Option --}}
+                                        <button
+                                            type="button"
+                                            wire:click="openViewModal({{ $task->id }})"
+                                            class="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition cursor-pointer"
+                                            title="View Task Details"
+                                        >
+                                            <flux:icon name="eye" class="size-4" />
+                                        </button>
+
+                                        {{-- Edit Option --}}
                                         <button
                                             type="button"
                                             wire:click="openEditModal({{ $task->id }})"
@@ -376,6 +387,8 @@
                                         >
                                             <flux:icon name="pencil-square" class="size-4" />
                                         </button>
+
+                                        {{-- Delete Option --}}
                                         <button
                                             type="button"
                                             wire:click="confirmDelete({{ $task->id }})"
@@ -432,7 +445,17 @@
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
-                                <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
+                                <div class="flex items-center gap-1">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
+                                </div>
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-900 dark:text-white leading-snug">{{ $bTask->title }}</h4>
                             @if ($bTask->description)
@@ -484,7 +507,17 @@
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
-                                <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
+                                <div class="flex items-center gap-1">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
+                                </div>
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-900 dark:text-white leading-snug">{{ $bTask->title }}</h4>
                             @if ($bTask->description)
@@ -536,7 +569,17 @@
                                 <span class="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
                                     <flux:icon name="check" class="size-3" /> Completed
                                 </span>
-                                <span class="text-[10px] text-zinc-400">Done {{ $bTask->completed_at ? $bTask->completed_at->format('M d') : '' }}</span>
+                                <div class="flex items-center gap-1">
+                                    <button
+                                        type="button"
+                                        wire:click="openViewModal({{ $bTask->id }})"
+                                        class="p-1 rounded text-zinc-400 hover:text-indigo-600 transition"
+                                        title="View Details"
+                                    >
+                                        <flux:icon name="eye" class="size-3.5" />
+                                    </button>
+                                    <span class="text-[10px] text-zinc-400">Done {{ $bTask->completed_at ? $bTask->completed_at->format('M d') : '' }}</span>
+                                </div>
                             </div>
                             <h4 class="font-semibold text-sm text-zinc-700 dark:text-zinc-300 line-through leading-snug">{{ $bTask->title }}</h4>
                             <div class="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-700 text-xs">
@@ -617,6 +660,153 @@
             @endforeach
         </div>
     @endif
+
+    {{-- VIEW TASK DETAILS MODAL --}}
+    <flux:modal wire:model="showViewModal" class="md:w-[620px]">
+        @if ($this->viewingTask)
+            <div class="space-y-6">
+                {{-- Modal Header --}}
+                <div class="flex items-start justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold
+                                {{ $this->viewingTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border border-rose-200 dark:border-rose-800' :
+                                   ($this->viewingTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-400 border border-sky-200 dark:border-sky-800' :
+                                   'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700') }}">
+                                <span class="size-1.5 rounded-full {{ $this->viewingTask->priority === 'high' ? 'bg-rose-500' : ($this->viewingTask->priority === 'medium' ? 'bg-sky-500' : 'bg-zinc-400') }}"></span>
+                                {{ ucfirst($this->viewingTask->priority) }} Priority
+                            </span>
+
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold
+                                {{ $this->viewingTask->status === 'completed' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800' :
+                                   ($this->viewingTask->status === 'in_progress' ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border border-blue-200 dark:border-blue-800' :
+                                   'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800') }}">
+                                {{ ucfirst(str_replace('_', ' ', $this->viewingTask->status)) }}
+                            </span>
+                        </div>
+                        <flux:heading size="xl" class="font-bold text-zinc-900 dark:text-white leading-tight">
+                            {{ $this->viewingTask->title }}
+                        </flux:heading>
+                    </div>
+                </div>
+
+                {{-- Task Description --}}
+                <div class="space-y-2">
+                    <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Description</flux:text>
+                    <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-800 dark:text-zinc-200 whitespace-pre-line leading-relaxed">
+                        {{ $this->viewingTask->description ?: 'No detailed description provided.' }}
+                    </div>
+                </div>
+
+                {{-- Task Details Grid --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    {{-- Assigned To --}}
+                    <div class="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-1.5">
+                        <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Assigned To</flux:text>
+                        @if ($this->viewingTask->assignee)
+                            <div class="flex items-center gap-2.5 pt-1">
+                                <div class="flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white text-xs font-bold shadow-sm">
+                                    {{ $this->viewingTask->assignee->initials() }}
+                                </div>
+                                <div class="leading-tight overflow-hidden">
+                                    <p class="font-semibold text-zinc-900 dark:text-zinc-100 truncate">{{ $this->viewingTask->assignee->name }}</p>
+                                    <p class="text-xs text-zinc-400 truncate">{{ $this->viewingTask->assignee->email }}</p>
+                                </div>
+                            </div>
+                        @else
+                            <p class="text-xs text-zinc-400 italic pt-1">Unassigned</p>
+                        @endif
+                    </div>
+
+                    {{-- Due Date & Overdue Info --}}
+                    <div class="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-1.5">
+                        <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Due Date</flux:text>
+                        <div class="pt-1 space-y-1">
+                            @if ($this->viewingTask->due_date)
+                                <div class="flex items-center gap-2 font-semibold text-zinc-900 dark:text-white">
+                                    <flux:icon name="calendar" class="size-4 text-indigo-500" />
+                                    <span>{{ $this->viewingTask->due_date->format('F d, Y') }}</span>
+                                </div>
+                                @if ($this->viewingTask->status === 'completed')
+                                    <span class="text-xs text-emerald-600 font-medium">Completed on {{ $this->viewingTask->completed_at ? $this->viewingTask->completed_at->format('M d, Y') : '-' }}</span>
+                                @elseif ($this->viewingTask->isOverdue())
+                                    <span class="text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800 inline-block">
+                                        Overdue by {{ $this->viewingTask->due_date->diffInDays(now()) }} days
+                                    </span>
+                                @else
+                                    <span class="text-xs text-zinc-500">Remaining: {{ $this->viewingTask->due_date->diffForHumans(null, true) }} left</span>
+                                @endif
+                            @else
+                                <p class="text-xs text-zinc-400 italic">No deadline specified</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Created Date --}}
+                    <div class="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-1.5">
+                        <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Created Date</flux:text>
+                        <div class="pt-1 space-y-0.5">
+                            <p class="font-semibold text-zinc-900 dark:text-white">
+                                {{ $this->viewingTask->created_at ? $this->viewingTask->created_at->format('F d, Y - h:i A') : '-' }}
+                            </p>
+                            <p class="text-xs text-zinc-400">
+                                {{ $this->viewingTask->created_at ? $this->viewingTask->created_at->diffForHumans() : '' }}
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- Quick Status Changer Inside View --}}
+                    <div class="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-1.5">
+                        <flux:text class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Update Status</flux:text>
+                        <div class="flex items-center gap-1.5 pt-1">
+                            <button
+                                type="button"
+                                wire:click="updateTaskStatus({{ $this->viewingTask->id }}, 'pending')"
+                                class="px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer {{ $this->viewingTask->status === 'pending' ? 'bg-amber-500 text-white font-bold' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 hover:bg-amber-100' }}"
+                            >
+                                Pending
+                            </button>
+                            <button
+                                type="button"
+                                wire:click="updateTaskStatus({{ $this->viewingTask->id }}, 'in_progress')"
+                                class="px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer {{ $this->viewingTask->status === 'in_progress' ? 'bg-blue-500 text-white font-bold' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 hover:bg-blue-100' }}"
+                            >
+                                In Progress
+                            </button>
+                            <button
+                                type="button"
+                                wire:click="updateTaskStatus({{ $this->viewingTask->id }}, 'completed')"
+                                class="px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer {{ $this->viewingTask->status === 'completed' ? 'bg-emerald-500 text-white font-bold' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 hover:bg-emerald-100' }}"
+                            >
+                                Completed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Modal Footer --}}
+                <div class="flex items-center justify-between pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                    <button
+                        type="button"
+                        wire:click="confirmDelete({{ $this->viewingTask->id }})"
+                        class="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center gap-1 cursor-pointer"
+                    >
+                        <flux:icon name="trash" class="size-4" />
+                        <span>Delete Task</span>
+                    </button>
+
+                    <div class="flex items-center gap-3">
+                        <flux:button variant="ghost" wire:click="$set('showViewModal', false)">
+                            Close
+                        </flux:button>
+                        <flux:button variant="primary" icon="pencil-square" wire:click="openEditModal({{ $this->viewingTask->id }})">
+                            Edit Task
+                        </flux:button>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </flux:modal>
 
     {{-- Create / Edit Task Modal Form --}}
     <flux:modal wire:model="showTaskModal" class="md:w-[560px]">
