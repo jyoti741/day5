@@ -157,7 +157,7 @@
             <flux:input
                 wire:model.live.debounce.250ms="search"
                 icon="magnifying-glass"
-                placeholder="Search tasks by title or description..."
+                placeholder="Search tasks by title, description, or assigned person's name..."
                 class="w-full"
                 clearable
             />

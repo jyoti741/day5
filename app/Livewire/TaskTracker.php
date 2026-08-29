@@ -295,11 +295,16 @@ class TaskTracker extends Component
     {
         $query = Task::with(['assignee', 'creator']);
 
-        // Search Filter (Task Title & Description)
+        // Search Filter (Task Title, Description, and Assigned User's Name / Email)
         if (!empty($this->search)) {
-            $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%');
+            $term = trim($this->search);
+            $query->where(function ($q) use ($term) {
+                $q->where('title', 'like', '%' . $term . '%')
+                  ->orWhere('description', 'like', '%' . $term . '%')
+                  ->orWhereHas('assignee', function ($userQuery) use ($term) {
+                      $userQuery->where('name', 'like', '%' . $term . '%')
+                                ->orWhere('email', 'like', '%' . $term . '%');
+                  });
             });
         }
 
