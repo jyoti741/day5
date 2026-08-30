@@ -36,6 +36,13 @@
                             Log in
                         </a>
 
+                        <a
+                            href="<?php echo e(route('login', ['portal' => 'admin'])); ?>"
+                            class="inline-block px-4 py-1.5 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-300 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 rounded-sm text-sm leading-normal"
+                        >
+                            🛡️ Admin Login
+                        </a>
+
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('register')): ?>
                             <a
                                 href="<?php echo e(route('register')); ?>"

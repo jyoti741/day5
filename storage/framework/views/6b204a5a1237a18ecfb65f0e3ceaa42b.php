@@ -1,20 +1,123 @@
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::link}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/link.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::button}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/button/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::link}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/link.blade.php}:{1787526214} ?>
 <?php if (isset($component)) { $__componentOriginal08b8a564843783787e0bee3357e24f38 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal08b8a564843783787e0bee3357e24f38 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'f4ac99e09542ff494432bc959d4fee61::auth','data' => ['title' => __('Log in')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'f4ac99e09542ff494432bc959d4fee61::auth','data' => ['title' => request()->query('portal') === 'admin' ? __('Admin Portal Login') : __('Log in')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('layouts::auth'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Log in'))]); ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->query('portal') === 'admin' ? __('Admin Portal Login') : __('Log in'))]); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
-    <div class="flex flex-col gap-6">
-        <?php if (isset($component)) { $__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd = $component; } ?>
+    <div x-data="{
+        portal: '<?php echo e(request()->query('portal', 'staff')); ?>',
+        email: '<?php echo e(old('email', '')); ?>',
+        password: '',
+        fillAdmin() {
+            this.portal = 'admin';
+            this.email = 'admin@astgd.com';
+            this.password = 'password';
+        }
+    }" class="flex flex-col gap-6">
+        
+        
+        <div class="flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-semibold">
+            <button
+                type="button"
+                @click="portal = 'staff'"
+                :class="portal === 'staff' ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xs' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'"
+                class="flex-1 py-2 rounded-lg text-center transition cursor-pointer flex items-center justify-center gap-1.5"
+            >
+                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                <span>Staff Login</span>
+            </button>
+
+            <button
+                type="button"
+                @click="portal = 'admin'"
+                :class="portal === 'admin' ? 'bg-indigo-600 text-white shadow-xs font-bold' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'"
+                class="flex-1 py-2 rounded-lg text-center transition cursor-pointer flex items-center justify-center gap-1.5"
+            >
+                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                <span>🛡️ Admin Portal</span>
+            </button>
+        </div>
+
+        
+        <template x-if="portal === 'admin'">
+            <div class="p-4 rounded-xl bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white border border-indigo-700/60 shadow-sm space-y-1">
+                <div class="flex items-center gap-2 text-indigo-300 text-xs font-extrabold uppercase tracking-wider">
+                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-4 text-indigo-400" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                    <span>Administrator Control Portal</span>
+                </div>
+                <h3 class="font-bold text-sm text-white">System Admin Sign-In</h3>
+                <p class="text-xs text-indigo-200/80 leading-relaxed">
+                    Access task administrative metrics, user assignments, and office tracker configuration.
+                </p>
+
+                <div class="pt-2">
+                    <button
+                        type="button"
+                        @click="fillAdmin()"
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-500/30 hover:bg-indigo-500/50 text-indigo-100 border border-indigo-400/40 transition cursor-pointer flex items-center gap-1.5"
+                    >
+                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5 text-amber-300" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                        <span>Quick Fill Admin Credentials (admin@astgd.com)</span>
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <div x-show="portal === 'admin'">
+            <?php if (isset($component)) { $__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.auth-header','data' => ['title' => __('Log in to Admin Portal'),'description' => __('Enter your administrator email and password below')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('auth-header'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Log in to Admin Portal')),'description' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Enter your administrator email and password below'))]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd)): ?>
+<?php $attributes = $__attributesOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd; ?>
+<?php unset($__attributesOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd)): ?>
+<?php $component = $__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd; ?>
+<?php unset($__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd); ?>
+<?php endif; ?>
+        </div>
+        <div x-show="portal !== 'admin'">
+            <?php if (isset($component)) { $__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.auth-header','data' => ['title' => __('Log in to your account'),'description' => __('Enter your email and password below to log in')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('auth-header'); ?>
@@ -36,6 +139,7 @@
 <?php $component = $__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd; ?>
 <?php unset($__componentOriginale5d2f2831f58fdbe96ad6d7cbd41a7dd); ?>
 <?php endif; ?>
+        </div>
 
         <!-- Session Status -->
         <?php if (isset($component)) { $__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $component; } ?>
@@ -89,15 +193,15 @@
 
             <!-- Email Address -->
             <?php if (!function_exists('_01037a522a3e13ab534f873493276cad')) { $__blaze->compile('C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/input/index.blade.php', $__blaze->compiledPath.'/01037a522a3e13ab534f873493276cad.php'); require $__blaze->compiledPath.'/01037a522a3e13ab534f873493276cad.php'; } ?>
-<?php $__blaze->pushData(['name' => 'email','label' => __('Email address'),'value' => old('email'),'type' => 'email','required' => true,'autofocus' => true,'autocomplete' => 'email','placeholder' => 'email@example.com']); ?>
-<?php _01037a522a3e13ab534f873493276cad($__blaze, ['name' => 'email','label' => __('Email address'),'value' => old('email'),'type' => 'email','required' => true,'autofocus' => true,'autocomplete' => 'email','placeholder' => 'email@example.com'], [], ['label', 'value', 'required', 'autofocus'], [], $__this ?? (isset($this) ? $this : null)); ?>
+<?php $__blaze->pushData(['name' => 'email','xModel' => 'email','label' => __('Email address'),'type' => 'email','required' => true,'autofocus' => true,'autocomplete' => 'email','placeholder' => 'email@example.com']); ?>
+<?php _01037a522a3e13ab534f873493276cad($__blaze, ['name' => 'email','xModel' => 'email','label' => __('Email address'),'type' => 'email','required' => true,'autofocus' => true,'autocomplete' => 'email','placeholder' => 'email@example.com'], [], ['label', 'required', 'autofocus'], ['xModel' => 'x-model'], $__this ?? (isset($this) ? $this : null)); ?>
 <?php $__blaze->popData(); ?>
 
             <!-- Password -->
             <div class="relative">
                 <?php if (!function_exists('_01037a522a3e13ab534f873493276cad')) { $__blaze->compile('C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/input/index.blade.php', $__blaze->compiledPath.'/01037a522a3e13ab534f873493276cad.php'); require $__blaze->compiledPath.'/01037a522a3e13ab534f873493276cad.php'; } ?>
-<?php $__blaze->pushData(['name' => 'password','label' => __('Password'),'type' => 'password','required' => true,'autocomplete' => 'current-password','placeholder' => __('Password'),'viewable' => true]); ?>
-<?php _01037a522a3e13ab534f873493276cad($__blaze, ['name' => 'password','label' => __('Password'),'type' => 'password','required' => true,'autocomplete' => 'current-password','placeholder' => __('Password'),'viewable' => true], [], ['label', 'required', 'placeholder', 'viewable'], [], $__this ?? (isset($this) ? $this : null)); ?>
+<?php $__blaze->pushData(['name' => 'password','xModel' => 'password','label' => __('Password'),'type' => 'password','required' => true,'autocomplete' => 'current-password','placeholder' => __('Password'),'viewable' => true]); ?>
+<?php _01037a522a3e13ab534f873493276cad($__blaze, ['name' => 'password','xModel' => 'password','label' => __('Password'),'type' => 'password','required' => true,'autocomplete' => 'current-password','placeholder' => __('Password'),'viewable' => true], [], ['label', 'required', 'placeholder', 'viewable'], ['xModel' => 'x-model'], $__this ?? (isset($this) ? $this : null)); ?>
 <?php $__blaze->popData(); ?>
 
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('password.request')): ?>
@@ -127,8 +231,7 @@
                     
             
             <span><?php ob_start(); ?>
-                    <?php echo e(__('Log in')); ?>
-
+                    <span x-text="portal === 'admin' ? '<?php echo e(__('Sign In as Administrator')); ?>' : '<?php echo e(__('Log in')); ?>'"></span>
                 <?php echo trim(ob_get_clean()); ?></span>
     </button>
 <?php echo ltrim(ob_get_clean()); ?>

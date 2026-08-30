@@ -227,9 +227,10 @@
             </flux:select>
 
             {{-- Overdue Filter Dropdown --}}
-            <flux:select wire:model.live="overdueFilter" class="min-w-[140px]" placeholder="Overdue Status">
+            <flux:select wire:model.live="overdueFilter" class="min-w-[160px]" placeholder="Overdue Status">
                 <flux:select.option value="all">All Tasks</flux:select.option>
                 <flux:select.option value="overdue">Overdue Only</flux:select.option>
+                <flux:select.option value="due_soon">Due Soon (Next 3 Days)</flux:select.option>
             </flux:select>
 
             {{-- Assigned To Filter --}}
@@ -295,6 +296,13 @@
                         <flux:icon name="x-mark" class="size-3" />
                     </button>
                 </span>
+            @elseif ($overdueFilter === 'due_soon')
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold">
+                    <span>Filter: <strong>Due Soon (Next 3 Days)</strong></span>
+                    <button type="button" wire:click="$set('overdueFilter', 'all')" class="hover:text-amber-900 cursor-pointer">
+                        <flux:icon name="x-mark" class="size-3" />
+                    </button>
+                </span>
             @endif
 
             @if ($assigneeFilter !== 'all')
@@ -335,7 +343,7 @@
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
                         @forelse ($tasks as $task)
-                            <tr class="transition group {{ $task->isOverdue() ? 'bg-rose-50/30 dark:bg-rose-950/20 hover:bg-rose-50/60 dark:hover:bg-rose-950/40' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40' }}">
+                            <tr class="transition group {{ $task->isOverdue() ? 'bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50/70 dark:hover:bg-rose-950/40 border-l-4 border-l-rose-500' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40' }}">
                                 {{-- Task Title & Description --}}
                                 <td class="py-4 px-4 align-top max-w-sm">
                                     <div class="flex items-start gap-3">
@@ -359,9 +367,8 @@
 
                                                 {{-- Separate OVERDUE Badge (Visible immediately) --}}
                                                 @if ($task->isOverdue())
-                                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
-                                                        <span class="size-1.5 rounded-full bg-rose-600 animate-pulse"></span>
-                                                        OVERDUE ({{ $task->daysOverdue() }}d)
+                                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2.5 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                                        {{ $task->overdueBadgeText() }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -460,13 +467,22 @@
                                                     Done {{ $task->completed_at ? $task->completed_at->diffForHumans() : '' }}
                                                 </span>
                                             @elseif ($task->isOverdue())
-                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-800">
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800">
                                                     <flux:icon name="exclamation-triangle" class="size-3 text-rose-600" />
-                                                    Overdue by {{ $task->daysOverdue() }}d
+                                                    {{ $task->overdueBadgeText() }}
                                                 </span>
                                             @elseif ($task->due_date->isToday())
-                                                <span class="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-extrabold text-amber-800 dark:text-amber-200 bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-300 dark:border-amber-700 shadow-xs">
+                                                    <span class="size-1.5 rounded-full bg-amber-600 animate-pulse"></span>
                                                     Due Today
+                                                </span>
+                                            @elseif ($task->due_date->isTomorrow())
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">
+                                                    Due Tomorrow
+                                                </span>
+                                            @elseif ($task->isDueSoon())
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700 dark:text-amber-400 bg-amber-50/70 dark:bg-amber-950/60 px-2 py-0.5 rounded border border-amber-200/80 dark:border-amber-800">
+                                                    {{ $task->remainingTimeLabel() }}
                                                 </span>
                                             @else
                                                 <span class="text-[11px] text-zinc-500 dark:text-zinc-400">
@@ -575,15 +591,19 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     @forelse ($allTasksForBoard->where('status', 'pending') as $bTask)
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
                             <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
 
                                 @if ($bTask->isOverdue())
-                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
-                                        OVERDUE ({{ $bTask->daysOverdue() }}d)
+                                    <span class="text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                        {{ $bTask->overdueBadgeText() }}
+                                    </span>
+                                @elseif ($bTask->isDueSoon())
+                                    <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded-full border border-amber-200">
+                                        {{ $bTask->remainingTimeLabel() }}
                                     </span>
                                 @else
                                     <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
@@ -644,15 +664,19 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     @forelse ($allTasksForBoard->where('status', 'in_progress') as $bTask)
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border {{ $bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/20' : 'border-zinc-200 dark:border-zinc-700/80' }} shadow-sm space-y-3 hover:shadow-md transition">
                             <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded {{ $bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200') }}">
                                     {{ ucfirst($bTask->priority) }} Priority
                                 </span>
 
                                 @if ($bTask->isOverdue())
-                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
-                                        OVERDUE ({{ $bTask->daysOverdue() }}d)
+                                    <span class="text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                        {{ $bTask->overdueBadgeText() }}
+                                    </span>
+                                @elseif ($bTask->isDueSoon())
+                                    <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded-full border border-amber-200">
+                                        {{ $bTask->remainingTimeLabel() }}
                                     </span>
                                 @else
                                     <span class="text-[10px] text-zinc-400">Due {{ $bTask->due_date ? $bTask->due_date->format('M d') : '-' }}</span>
@@ -911,7 +935,7 @@
                         </thead>
                         <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
                             @forelse ($this->monthlyOverdueReport['tasks'] as $oTask)
-                                <tr class="hover:bg-rose-50/30 dark:hover:bg-rose-950/20 transition">
+                                <tr class="hover:bg-rose-50/40 dark:hover:bg-rose-950/30 transition border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/10">
                                     {{-- Task Title --}}
                                     <td class="py-4 px-4 align-middle font-semibold text-zinc-900 dark:text-white">
                                         {{ $oTask->title }}
@@ -953,8 +977,7 @@
                                     {{-- Number of Days Overdue --}}
                                     <td class="py-4 px-4 align-middle whitespace-nowrap">
                                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 shadow-xs">
-                                            <flux:icon name="clock" class="size-3.5 text-rose-600" />
-                                            <span>{{ $oTask->daysOverdue() }} days overdue</span>
+                                            {{ $oTask->overdueBadgeText() }}
                                         </span>
                                     </td>
 
@@ -997,7 +1020,7 @@
                         <flux:icon name="exclamation-triangle" class="size-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
                         <div class="text-xs space-y-0.5">
                             <p class="font-black text-rose-700 dark:text-rose-300 uppercase tracking-wider">
-                                OVERDUE TASK WARNING
+                                {{ $this->viewingTask->overdueBadgeText() }}
                             </p>
                             <p>
                                 This task was due on <strong>{{ $this->viewingTask->due_date->format('F d, Y') }}</strong> and is currently <strong>{{ $this->viewingTask->daysOverdue() }} days past deadline</strong>. Status is still <em>{{ ucfirst(str_replace('_', ' ', $this->viewingTask->status)) }}</em>.
@@ -1010,6 +1033,12 @@
                 <div class="flex items-start justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
                     <div class="space-y-1">
                         <div class="flex items-center gap-2 flex-wrap">
+                            @if ($this->viewingTask->isOverdue())
+                                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                    {{ $this->viewingTask->overdueBadgeText() }}
+                                </span>
+                            @endif
+
                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold
                                 {{ $this->viewingTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border border-rose-200 dark:border-rose-800' :
                                    ($this->viewingTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-400 border border-sky-200 dark:border-sky-800' :
@@ -1024,13 +1053,6 @@
                                    'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800') }}">
                                 {{ ucfirst(str_replace('_', ' ', $this->viewingTask->status)) }}
                             </span>
-
-                            @if ($this->viewingTask->isOverdue())
-                                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-xs">
-                                    <flux:icon name="clock" class="size-3" />
-                                    OVERDUE
-                                </span>
-                            @endif
                         </div>
                         <flux:heading size="xl" class="font-bold text-zinc-900 dark:text-white leading-tight">
                             {{ $this->viewingTask->title }}

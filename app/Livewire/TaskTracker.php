@@ -302,6 +302,7 @@ class TaskTracker extends Component
         $completed = Task::where('status', 'completed')->count();
         $highPriority = Task::where('priority', 'high')->count();
         $overdue = Task::overdue()->count();
+        $dueSoon = Task::dueSoon()->count();
 
         $completionRate = $total > 0 ? round(($completed / $total) * 100) : 0;
 
@@ -312,6 +313,7 @@ class TaskTracker extends Component
             'completed' => $completed,
             'high_priority' => $highPriority,
             'overdue' => $overdue,
+            'due_soon' => $dueSoon,
             'completion_rate' => $completionRate,
         ];
     }
@@ -406,9 +408,11 @@ class TaskTracker extends Component
             $query->where('priority', $this->priorityFilter);
         }
 
-        // Overdue Filter
+        // Overdue or Due Soon Filter
         if ($this->overdueFilter === 'overdue') {
             $query->overdue();
+        } elseif ($this->overdueFilter === 'due_soon') {
+            $query->dueSoon();
         }
 
         // Assigned To Filter

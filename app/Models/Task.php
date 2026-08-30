@@ -98,6 +98,17 @@ class Task extends Model
             ->where('due_date', '<', Carbon::today());
     }
 
+    public function scopeDueSoon($query)
+    {
+        $today = Carbon::today();
+        $threeDaysLater = Carbon::today()->addDays(3);
+
+        return $query->where('status', '!=', 'completed')
+            ->whereNotNull('due_date')
+            ->whereDate('due_date', '>=', $today)
+            ->whereDate('due_date', '<=', $threeDaysLater);
+    }
+
     /**
      * Check if task is overdue.
      * Automatically calculated: due date has passed & status is not completed.
@@ -120,6 +131,68 @@ class Task extends Model
             return 0;
         }
 
-        return max(1, (int) Carbon::today()->diffInDays($this->due_date->startOfDay()));
+        $days = (int) abs(Carbon::today()->diffInDays($this->due_date->startOfDay(), false));
+
+        return max(1, $days);
+    }
+
+    /**
+     * Formatted Overdue badge label.
+     * Example: "🔴 OVERDUE · 5 days late" or "🔴 OVERDUE · 1 day late"
+     */
+    public function overdueBadgeText(): string
+    {
+        $days = $this->daysOverdue();
+        $dayWord = $days === 1 ? 'day' : 'days';
+
+        return "🔴 OVERDUE · {$days} {$dayWord} late";
+    }
+
+    /**
+     * Check if task is due soon (today, tomorrow, or within next 3 days, and not completed or overdue).
+     */
+    public function isDueSoon(): bool
+    {
+        if ($this->status === 'completed' || is_null($this->due_date)) {
+            return false;
+        }
+
+        $today = Carbon::today();
+        $threeDaysLater = Carbon::today()->addDays(3);
+        $dueDate = $this->due_date->startOfDay();
+
+        return $dueDate->gte($today) && $dueDate->lte($threeDaysLater);
+    }
+
+    /**
+     * Get human-friendly remaining time label for upcoming deadlines.
+     * E.g. "Due Today", "Due Tomorrow", "Due in 2 days"
+     */
+    public function remainingTimeLabel(): string
+    {
+        if (is_null($this->due_date)) {
+            return '';
+        }
+
+        $today = Carbon::today();
+        $dueDate = $this->due_date->startOfDay();
+        $diff = (int) $today->diffInDays($dueDate, false);
+
+        if ($diff < 0) {
+            $daysLate = abs($diff);
+            $dayWord = $daysLate === 1 ? 'day' : 'days';
+            return "{$daysLate} {$dayWord} late";
+        }
+
+        if ($diff === 0) {
+            return 'Due Today';
+        }
+
+        if ($diff === 1) {
+            return 'Due Tomorrow';
+        }
+
+        return "Due in {$diff} days";
     }
 }
+

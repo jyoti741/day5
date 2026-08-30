@@ -13,7 +13,14 @@
                 :initials="auth()->user()->initials()"
             />
             <div class="grid flex-1 text-start text-sm leading-tight">
-                <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                <div class="flex items-center gap-1.5">
+                    <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                    @if (auth()->user()->isAdmin())
+                        <span class="px-1.5 py-0.5 text-[10px] font-black uppercase text-indigo-700 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-950 rounded border border-indigo-300 dark:border-indigo-700">
+                            🛡️ Admin
+                        </span>
+                    @endif
+                </div>
                 <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
             </div>
         </div>

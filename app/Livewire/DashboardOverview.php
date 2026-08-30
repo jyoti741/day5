@@ -14,6 +14,9 @@ class DashboardOverview extends Component
     // Interactive filter tab on dashboard: 'pending', 'in_progress', 'completed', 'high_priority', 'all'
     public string $selectedStatusTab = 'pending';
 
+    // Interactive chart visualization mode: 'status' or 'priority'
+    public string $chartMode = 'status';
+
     public bool $showViewModal = false;
 
     public ?int $viewingTaskId = null;
@@ -21,6 +24,13 @@ class DashboardOverview extends Component
     public function selectStatusTab(string $tab): void
     {
         $this->selectedStatusTab = $tab;
+    }
+
+    public function selectChartMode(string $mode): void
+    {
+        if (in_array($mode, ['status', 'priority'])) {
+            $this->chartMode = $mode;
+        }
     }
 
     public function openViewModal(int $taskId): void
@@ -65,13 +75,11 @@ class DashboardOverview extends Component
         $inProgress = Task::where('status', 'in_progress')->count();
         $completed = Task::where('status', 'completed')->count();
         $highPriority = Task::where('priority', 'high')->count();
-        $overdue = Task::where('status', '!=', 'completed')
-            ->whereNotNull('due_date')
-            ->where('due_date', '<', Carbon::today())
-            ->count();
+        $overdue = Task::overdue()->count();
         $dueToday = Task::where('status', '!=', 'completed')
             ->whereDate('due_date', Carbon::today())
             ->count();
+        $dueSoon = Task::dueSoon()->count();
 
         $completionRate = $total > 0 ? round(($completed / $total) * 100) : 0;
 
@@ -83,6 +91,7 @@ class DashboardOverview extends Component
             'high_priority' => $highPriority,
             'overdue' => $overdue,
             'due_today' => $dueToday,
+            'due_soon' => $dueSoon,
             'completion_rate' => $completionRate,
         ];
     }
@@ -94,19 +103,61 @@ class DashboardOverview extends Component
         $completed = Task::where('status', 'completed')->count();
         $inProgress = Task::where('status', 'in_progress')->count();
         $pending = Task::where('status', 'pending')->count();
+        $overdue = Task::overdue()->count();
 
-        $completedPercentage = $total > 0 ? (int) round(($completed / $total) * 100) : 0;
-        $inProgressPercentage = $total > 0 ? (int) round(($inProgress / $total) * 100) : 0;
-        $pendingPercentage = $total > 0 ? (int) round(($pending / $total) * 100) : 0;
+        $completedPct = $total > 0 ? round(($completed / $total) * 100, 1) : 0;
+        $inProgressPct = $total > 0 ? round(($inProgress / $total) * 100, 1) : 0;
+        $pendingPct = $total > 0 ? round(($pending / $total) * 100, 1) : 0;
+        $overduePct = $total > 0 ? round(($overdue / $total) * 100, 1) : 0;
+
+        // SVG Donut Circle offsets (Circumference = 100)
+        $completedOffset = 0;
+        $inProgressOffset = -1 * $completedPct;
+        $pendingOffset = -1 * ($completedPct + $inProgressPct);
+
+        // Priority breakdown
+        $highPriority = Task::where('priority', 'high')->count();
+        $mediumPriority = Task::where('priority', 'medium')->count();
+        $lowPriority = Task::where('priority', 'low')->count();
+
+        $highPct = $total > 0 ? round(($highPriority / $total) * 100, 1) : 0;
+        $mediumPct = $total > 0 ? round(($mediumPriority / $total) * 100, 1) : 0;
+        $lowPct = $total > 0 ? round(($lowPriority / $total) * 100, 1) : 0;
+
+        $highOffset = 0;
+        $mediumOffset = -1 * $highPct;
+        $lowOffset = -1 * ($highPct + $mediumPct);
 
         return [
             'total' => $total,
+            // Status data
             'completed_count' => $completed,
             'in_progress_count' => $inProgress,
             'pending_count' => $pending,
-            'completed_percentage' => $completedPercentage,
-            'in_progress_percentage' => $inProgressPercentage,
-            'pending_percentage' => $pendingPercentage,
+            'overdue_count' => $overdue,
+            'completed_percentage' => (int) round($completedPct),
+            'in_progress_percentage' => (int) round($inProgressPct),
+            'pending_percentage' => (int) round($pendingPct),
+            'overdue_percentage' => (int) round($overduePct),
+            'completed_pct_exact' => $completedPct,
+            'in_progress_pct_exact' => $inProgressPct,
+            'pending_pct_exact' => $pendingPct,
+            'completed_offset' => $completedOffset,
+            'in_progress_offset' => $inProgressOffset,
+            'pending_offset' => $pendingOffset,
+            // Priority data
+            'high_count' => $highPriority,
+            'medium_count' => $mediumPriority,
+            'low_count' => $lowPriority,
+            'high_percentage' => (int) round($highPct),
+            'medium_percentage' => (int) round($mediumPct),
+            'low_percentage' => (int) round($lowPct),
+            'high_pct_exact' => $highPct,
+            'medium_pct_exact' => $mediumPct,
+            'low_pct_exact' => $lowPct,
+            'high_offset' => $highOffset,
+            'medium_offset' => $mediumOffset,
+            'low_offset' => $lowOffset,
         ];
     }
 
@@ -123,14 +174,8 @@ class DashboardOverview extends Component
     #[Computed]
     public function dueSoonTasks()
     {
-        $today = Carbon::today()->format('Y-m-d');
-        $threeDaysLater = Carbon::today()->addDays(3)->format('Y-m-d');
-
         return Task::with(['assignee'])
-            ->where('status', '!=', 'completed')
-            ->whereNotNull('due_date')
-            ->whereDate('due_date', '>=', $today)
-            ->whereDate('due_date', '<=', $threeDaysLater)
+            ->dueSoon()
             ->orderBy('due_date', 'asc')
             ->get();
     }

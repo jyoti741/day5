@@ -41,6 +41,17 @@
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::heading}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/heading.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::text}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/text.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::button}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/button/index.blade.php}:{1787526214} ?>
@@ -303,10 +314,10 @@
     </div>
 
     
-    <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
+    <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-100 dark:border-zinc-800">
             <div class="flex items-center gap-3">
-                <div class="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                <div class="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/50">
                     <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-6" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/>
   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/>
@@ -315,86 +326,390 @@
         <?php echo ltrim(ob_get_clean()); ?>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg text-zinc-900 dark:text-white">Task Statistics</h3>
-                    <p class="text-xs text-zinc-500">Live breakdown and percentage of tasks by current status</p>
+                    <h3 class="font-extrabold text-lg text-zinc-900 dark:text-white">Task Statistics & Pie Chart</h3>
+                    <p class="text-xs text-zinc-500">Visual percentage distribution and breakdown of office tasks</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 text-xs">
-                <span class="font-medium text-zinc-500">Total:</span>
-                <span class="font-bold px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white">
-                    <?php echo e($this->taskStatistics['total']); ?> Tasks
-                </span>
+            
+            <div class="flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700 text-xs font-semibold">
+                <button
+                    type="button"
+                    wire:click="selectChartMode('status')"
+                    class="px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 <?php echo e($chartMode === 'status' ? 'bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-xs' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'); ?>"
+                >
+                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                    <span>Status Breakdown</span>
+                </button>
+                <button
+                    type="button"
+                    wire:click="selectChartMode('priority')"
+                    class="px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 <?php echo e($chartMode === 'priority' ? 'bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-xs' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'); ?>"
+                >
+                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                    <span>Priority Distribution</span>
+                </button>
             </div>
         </div>
 
         
-        <div class="mt-5 space-y-2">
-            <div class="w-full h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
-                <div class="bg-emerald-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['completed_percentage']); ?>%" title="Completed: <?php echo e($this->taskStatistics['completed_percentage']); ?>%"></div>
-                <div class="bg-blue-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['in_progress_percentage']); ?>%" title="In Progress: <?php echo e($this->taskStatistics['in_progress_percentage']); ?>%"></div>
-                <div class="bg-amber-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['pending_percentage']); ?>%" title="Pending: <?php echo e($this->taskStatistics['pending_percentage']); ?>%"></div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            
+            <div class="md:col-span-5 flex flex-col items-center justify-center relative py-2">
+                <div class="relative size-52 sm:size-56 flex items-center justify-center">
+                    
+                    
+                    <svg class="size-full transform -rotate-90 drop-shadow-sm" viewBox="0 0 42 42">
+                        
+                        <circle
+                            cx="21"
+                            cy="21"
+                            r="15.91549430918954"
+                            fill="transparent"
+                            class="stroke-zinc-100 dark:stroke-zinc-800"
+                            stroke-width="5"
+                        ></circle>
+
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['total'] > 0): ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($chartMode === 'status'): ?>
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['completed_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#10b981"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['completed_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['completed_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['completed_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>Completed: <?php echo e($this->taskStatistics['completed_percentage']); ?>% (<?php echo e($this->taskStatistics['completed_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['in_progress_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#3b82f6"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['in_progress_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['in_progress_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['in_progress_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>In Progress: <?php echo e($this->taskStatistics['in_progress_percentage']); ?>% (<?php echo e($this->taskStatistics['in_progress_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['pending_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#f59e0b"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['pending_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['pending_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['pending_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>Pending: <?php echo e($this->taskStatistics['pending_percentage']); ?>% (<?php echo e($this->taskStatistics['pending_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                            <?php else: ?> 
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['high_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#f43f5e"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['high_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['high_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['high_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>High Priority: <?php echo e($this->taskStatistics['high_percentage']); ?>% (<?php echo e($this->taskStatistics['high_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['medium_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#0284c7"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['medium_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['medium_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['medium_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>Medium Priority: <?php echo e($this->taskStatistics['medium_percentage']); ?>% (<?php echo e($this->taskStatistics['medium_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['low_pct_exact'] > 0): ?>
+                                    <circle
+                                        cx="21"
+                                        cy="21"
+                                        r="15.91549430918954"
+                                        fill="transparent"
+                                        stroke="#71717a"
+                                        stroke-width="5"
+                                        stroke-dasharray="<?php echo e($this->taskStatistics['low_pct_exact']); ?> <?php echo e(100 - $this->taskStatistics['low_pct_exact']); ?>"
+                                        stroke-dashoffset="<?php echo e($this->taskStatistics['low_offset']); ?>"
+                                        class="transition-all duration-700 ease-out hover:opacity-85 cursor-pointer"
+                                    >
+                                        <title>Low Priority: <?php echo e($this->taskStatistics['low_percentage']); ?>% (<?php echo e($this->taskStatistics['low_count']); ?> tasks)</title>
+                                    </circle>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    </svg>
+
+                    
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <span class="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">
+                            <?php echo e($this->taskStatistics['total']); ?>
+
+                        </span>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-400 uppercase mt-0.5">
+                            <?php echo e($chartMode === 'status' ? 'TOTAL TASKS' : 'BY PRIORITY'); ?>
+
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="mt-3 text-center">
+                    <span class="text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+                        <?php echo e($chartMode === 'status' ? 'Status Breakdown Pie Chart' : 'Priority Distribution Pie Chart'); ?>
+
+                    </span>
+                </div>
             </div>
 
             
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
-                
-                <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-between">
-                    <div>
-                        <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Completed</span>
-                        <div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">
-                            <?php echo e($this->taskStatistics['completed_percentage']); ?>%
-                        </div>
-                        <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
-                            Completed: <?php echo e($this->taskStatistics['completed_percentage']); ?>% (<?php echo e($this->taskStatistics['completed_count']); ?> tasks)
-                        </span>
-                    </div>
-                    <div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
-                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-6" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <div class="md:col-span-7 space-y-4">
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($chartMode === 'status'): ?>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        
+                        <button
+                            type="button"
+                            wire:click="selectStatusTab('completed')"
+                            class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/80 flex items-center justify-between text-start hover:shadow-xs transition cursor-pointer"
+                        >
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-emerald-500"></span>
+                                    <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Completed</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 mt-1">
+                                    <?php echo e($this->taskStatistics['completed_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                                    <?php echo e($this->taskStatistics['completed_count']); ?> tasks completed
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
-                    </div>
-                </div>
+                            </div>
+                        </button>
 
-                
-                <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/80 flex items-center justify-between">
-                    <div>
-                        <span class="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wider">In Progress</span>
-                        <div class="text-2xl font-extrabold text-blue-700 dark:text-blue-300 mt-0.5">
-                            <?php echo e($this->taskStatistics['in_progress_percentage']); ?>%
-                        </div>
-                        <span class="text-[11px] text-blue-600 dark:text-blue-400 font-medium">
-                            In Progress: <?php echo e($this->taskStatistics['in_progress_percentage']); ?>% (<?php echo e($this->taskStatistics['in_progress_count']); ?> tasks)
-                        </span>
-                    </div>
-                    <div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
-                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-6" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                        
+                        <button
+                            type="button"
+                            wire:click="selectStatusTab('in_progress')"
+                            class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/80 flex items-center justify-between text-start hover:shadow-xs transition cursor-pointer"
+                        >
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-blue-500"></span>
+                                    <span class="text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wider">In Progress</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-blue-700 dark:text-blue-300 mt-1">
+                                    <?php echo e($this->taskStatistics['in_progress_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                                    <?php echo e($this->taskStatistics['in_progress_count']); ?> tasks active
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
-                    </div>
-                </div>
+                            </div>
+                        </button>
 
-                
-                <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/80 flex items-center justify-between">
-                    <div>
-                        <span class="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Pending</span>
-                        <div class="text-2xl font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">
-                            <?php echo e($this->taskStatistics['pending_percentage']); ?>%
-                        </div>
-                        <span class="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
-                            Pending: <?php echo e($this->taskStatistics['pending_percentage']); ?>% (<?php echo e($this->taskStatistics['pending_count']); ?> tasks)
-                        </span>
-                    </div>
-                    <div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">
-                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-6" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                        
+                        <button
+                            type="button"
+                            wire:click="selectStatusTab('pending')"
+                            class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/80 flex items-center justify-between text-start hover:shadow-xs transition cursor-pointer"
+                        >
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-amber-500"></span>
+                                    <span class="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Pending</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-amber-700 dark:text-amber-300 mt-1">
+                                    <?php echo e($this->taskStatistics['pending_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+                                    <?php echo e($this->taskStatistics['pending_count']); ?> tasks pending
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
+                            </div>
+                        </button>
+                    </div>
+
+                    
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->taskStatistics['overdue_count'] > 0): ?>
+                        <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-4 text-rose-600 shrink-0" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                                <span>🔴 <?php echo e($this->taskStatistics['overdue_count']); ?> task(s) currently overdue (<?php echo e($this->taskStatistics['overdue_percentage']); ?>% of total)</span>
+                            </div>
+                            <a href="<?php echo e(route('tasks', ['overdue' => 'overdue'])); ?>" wire:navigate class="px-2.5 py-1 rounded-lg bg-rose-600 text-white font-bold hover:bg-rose-700 transition">
+                                View Overdue
+                            </a>
+                        </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                <?php else: ?> 
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        
+                        <button
+                            type="button"
+                            wire:click="selectStatusTab('high_priority')"
+                            class="p-4 rounded-xl bg-rose-50/70 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-800/80 flex items-center justify-between text-start hover:shadow-xs transition cursor-pointer"
+                        >
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-rose-500"></span>
+                                    <span class="text-xs font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">High Priority</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-rose-700 dark:text-rose-300 mt-1">
+                                    <?php echo e($this->taskStatistics['high_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-rose-600 dark:text-rose-400 font-medium">
+                                    <?php echo e($this->taskStatistics['high_count']); ?> urgent tasks
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-rose-100 dark:bg-rose-900 text-rose-700 dark:text-rose-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                            </div>
+                        </button>
+
+                        
+                        <div class="p-4 rounded-xl bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/80 flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-sky-500"></span>
+                                    <span class="text-xs font-semibold text-sky-700 dark:text-sky-400 uppercase tracking-wider">Medium</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-sky-700 dark:text-sky-300 mt-1">
+                                    <?php echo e($this->taskStatistics['medium_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-sky-600 dark:text-sky-400 font-medium">
+                                    <?php echo e($this->taskStatistics['medium_count']); ?> tasks
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                            </div>
+                        </div>
+
+                        
+                        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 flex items-center justify-between">
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="size-2.5 rounded-full bg-zinc-400"></span>
+                                    <span class="text-xs font-semibold text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">Low Priority</span>
+                                </div>
+                                <div class="text-2xl font-extrabold text-zinc-800 dark:text-zinc-100 mt-1">
+                                    <?php echo e($this->taskStatistics['low_percentage']); ?>%
+                                </div>
+                                <span class="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
+                                    <?php echo e($this->taskStatistics['low_count']); ?> tasks
+                                </span>
+                            </div>
+                            <div class="p-2 rounded-lg bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300">
+                                <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between text-xs text-zinc-500">
+                        <span class="font-semibold text-zinc-700 dark:text-zinc-300">Visual Proportion Stack</span>
+                        <span>Total: <?php echo e($this->taskStatistics['total']); ?> Tasks</span>
+                    </div>
+                    <div class="w-full h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($chartMode === 'status'): ?>
+                            <div class="bg-emerald-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['completed_pct_exact']); ?>%" title="Completed: <?php echo e($this->taskStatistics['completed_percentage']); ?>%"></div>
+                            <div class="bg-blue-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['in_progress_pct_exact']); ?>%" title="In Progress: <?php echo e($this->taskStatistics['in_progress_percentage']); ?>%"></div>
+                            <div class="bg-amber-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['pending_pct_exact']); ?>%" title="Pending: <?php echo e($this->taskStatistics['pending_percentage']); ?>%"></div>
+                        <?php else: ?>
+                            <div class="bg-rose-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['high_pct_exact']); ?>%" title="High Priority: <?php echo e($this->taskStatistics['high_percentage']); ?>%"></div>
+                            <div class="bg-sky-500 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['medium_pct_exact']); ?>%" title="Medium Priority: <?php echo e($this->taskStatistics['medium_percentage']); ?>%"></div>
+                            <div class="bg-zinc-400 h-full transition-all duration-500" style="width: <?php echo e($this->taskStatistics['low_pct_exact']); ?>%" title="Low Priority: <?php echo e($this->taskStatistics['low_percentage']); ?>%"></div>
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -404,39 +719,57 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden flex flex-col">
-            <div class="p-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-amber-50/40 dark:bg-amber-950/20">
-                <div class="flex items-center gap-2.5">
-                    <div class="p-2 rounded-xl bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">
-                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
+        <div class="bg-amber-50/30 dark:bg-amber-950/20 rounded-2xl border-2 border-amber-300 dark:border-amber-700/70 shadow-sm shadow-amber-500/5 overflow-hidden flex flex-col">
+            
+            <div class="p-5 border-b border-amber-200 dark:border-amber-800/80 bg-amber-100/60 dark:bg-amber-950/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 rounded-xl bg-amber-500 text-white shadow-sm shadow-amber-500/30 flex items-center justify-center shrink-0">
+                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5 stroke-[2.5]" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Due Soon</h3>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-white">Next 3 Days</span>
+                            <h3 class="font-extrabold text-base text-amber-950 dark:text-amber-100 flex items-center gap-1.5">
+                                <span>⚠️ Due Soon</span>
+                            </h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500 text-white shadow-xs">Alert</span>
                         </div>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Tasks with upcoming deadlines from today through the next 3 days</p>
+                        <p class="text-xs font-semibold text-amber-800 dark:text-amber-300 mt-0.5">
+                            <?php echo e($this->dueSoonTasks->count()); ?> <?php echo e($this->dueSoonTasks->count() === 1 ? 'task is' : 'tasks are'); ?> due within the next 3 days.
+                        </p>
                     </div>
                 </div>
 
-                <span class="font-bold text-xs px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300/60">
-                    <?php echo e($this->dueSoonTasks->count()); ?> Upcoming
-                </span>
+                <div class="flex items-center gap-2 self-end sm:self-center">
+                    <a
+                        href="<?php echo e(route('tasks', ['overdue' => 'due_soon'])); ?>"
+                        wire:navigate
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-amber-900 dark:text-amber-100 bg-amber-200/90 dark:bg-amber-900/80 hover:bg-amber-300 dark:hover:bg-amber-800 border border-amber-300 dark:border-amber-700 transition shadow-xs cursor-pointer"
+                    >
+                        <span>View All</span>
+                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                    </a>
+                </div>
             </div>
 
-            <div class="divide-y divide-zinc-200 dark:divide-zinc-800 flex-1">
+            
+            <div class="divide-y divide-amber-200/70 dark:divide-amber-900/40 bg-white/70 dark:bg-zinc-900/80 flex-1">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $this->dueSoonTasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                    <div class="p-4 hover:bg-amber-50/30 dark:hover:bg-amber-950/10 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="space-y-1 min-w-0 flex-1">
+                    <div class="p-4 hover:bg-amber-50/70 dark:hover:bg-amber-950/30 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-l-4 border-l-amber-500">
+                        <div class="space-y-1.5 min-w-0 flex-1">
                             <div class="flex items-center gap-2 flex-wrap">
-                                <h4 class="font-semibold text-sm text-zinc-900 dark:text-white">
+                                <h4 class="font-bold text-sm text-zinc-900 dark:text-white">
                                     <?php echo e($task->title); ?>
 
                                 </h4>
+
                                 
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->priority === 'high'): ?>
                                     <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200">
@@ -454,20 +787,20 @@
 
                                 
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->status === 'in_progress'): ?>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
                                         In Progress
                                     </span>
                                 <?php else: ?>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
                                         Pending
                                     </span>
                                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                             </div>
 
-                            <div class="flex items-center gap-2 text-xs text-zinc-500">
+                            <div class="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400 flex-wrap">
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->assignee): ?>
-                                    <span class="flex items-center gap-1 font-medium text-zinc-700 dark:text-zinc-300">
-                                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3 text-zinc-400" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                    <span class="flex items-center gap-1.5 font-medium text-zinc-700 dark:text-zinc-300">
+                                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5 text-zinc-400" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
 </svg>
 
@@ -475,27 +808,62 @@
                                         <span><?php echo e($task->assignee->name); ?></span>
                                     </span>
                                 <?php else: ?>
-                                    <span class="italic text-zinc-400">Unassigned</span>
+                                    <span class="italic text-zinc-400 flex items-center gap-1">
+                                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5 text-zinc-300" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                                        Unassigned
+                                    </span>
                                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                                <span>&bull;</span>
+
+                                <span class="flex items-center gap-1 text-zinc-600 dark:text-zinc-300">
+                                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5 text-amber-600 dark:text-amber-400" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                                    <span>Due: <strong><?php echo e($task->due_date ? $task->due_date->format('M d, Y') : 'No deadline'); ?></strong></span>
+                                </span>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3 shrink-0">
+                            
                             <div class="text-end">
-                                <span class="inline-flex items-center gap-1 font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
-                                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->due_date && $task->due_date->isToday()): ?>
+                                    <span class="inline-flex items-center gap-1.5 font-extrabold text-amber-900 dark:text-amber-200 bg-amber-100 dark:bg-amber-950/80 px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700 text-xs shadow-xs">
+                                        <span class="size-2 rounded-full bg-amber-600 animate-pulse"></span>
+                                        <span>Due Today</span>
+                                    </span>
+                                <?php elseif($task->due_date && $task->due_date->isTomorrow()): ?>
+                                    <span class="inline-flex items-center gap-1 font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-300/80 dark:border-amber-800 text-xs">
+                                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3 text-amber-600" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
-                                    <span>Due <?php echo e($task->due_date ? $task->due_date->format('M d') : 'Soon'); ?></span>
-                                </span>
+                                        <span>Due Tomorrow</span>
+                                    </span>
+                                <?php elseif($task->due_date): ?>
+                                    <span class="inline-flex items-center gap-1 font-semibold text-amber-800 dark:text-amber-300 bg-amber-50/80 dark:bg-amber-950/50 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
+                                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3 text-amber-500" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                                        <span><?php echo e($task->remainingTimeLabel()); ?></span>
+                                    </span>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                             </div>
 
                             <button
                                 type="button"
                                 wire:click="openViewModal(<?php echo e($task->id); ?>)"
-                                class="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
+                                class="p-1.5 rounded-lg text-zinc-400 hover:text-amber-700 hover:bg-amber-100 dark:hover:bg-zinc-800 transition cursor-pointer"
                                 title="View Details"
                             >
                                 <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
@@ -508,14 +876,16 @@
                         </div>
                     </div>
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
-                    <div class="p-8 text-center text-zinc-500">
-                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-8 mx-auto text-emerald-500 mb-1.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/>
+                    <div class="p-10 text-center text-zinc-500 dark:text-zinc-400 space-y-2">
+                        <div class="size-12 mx-auto rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2">
+                            <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-7 text-emerald-500" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
-                        <p class="font-semibold text-sm text-zinc-700 dark:text-zinc-300">No deadlines in the next 3 days</p>
-                        <p class="text-xs text-zinc-400 mt-0.5">All upcoming tasks have comfortable deadlines.</p>
+                        </div>
+                        <p class="font-bold text-sm text-zinc-900 dark:text-zinc-100">No tasks are due within the next 3 days.</p>
+                        <p class="text-xs text-zinc-400">All current active tasks have deadlines beyond the 3-day window.</p>
                     </div>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
@@ -552,13 +922,22 @@
 
             <div class="divide-y divide-zinc-200 dark:divide-zinc-800 flex-1">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $this->recentTasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                    <div class="p-4 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="p-4 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 <?php echo e($task->isOverdue() ? 'bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50/70 dark:hover:bg-rose-950/40 border-l-4 border-l-rose-500' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40'); ?>">
                         <div class="space-y-1 min-w-0 flex-1">
                             <div class="flex items-center gap-2 flex-wrap">
                                 <h4 class="font-semibold text-sm text-zinc-900 dark:text-white <?php echo e($task->status === 'completed' ? 'line-through text-zinc-400' : ''); ?>">
                                     <?php echo e($task->title); ?>
 
                                 </h4>
+
+                                
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->isOverdue()): ?>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                        <?php echo e($task->overdueBadgeText()); ?>
+
+                                    </span>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
                                 
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->priority === 'high'): ?>
                                     <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200">
@@ -609,7 +988,13 @@
 
                         <div class="flex items-center gap-3 shrink-0">
                             <div class="text-end">
-                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->due_date): ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->status === 'completed'): ?>
+                                    <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">Done</span>
+                                <?php elseif($task->isOverdue()): ?>
+                                    <span class="text-xs font-bold text-rose-600 dark:text-rose-400">
+                                        <?php echo e($task->due_date ? $task->due_date->format('M d') : ''); ?> (Overdue)
+                                    </span>
+                                <?php elseif($task->due_date): ?>
                                     <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">
                                         Due <?php echo e($task->due_date->format('M d')); ?>
 
@@ -730,13 +1115,13 @@
                 
                 <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $this->filteredDashboardTasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                        <div class="p-4 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="p-4 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 <?php echo e($task->isOverdue() ? 'bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50/70 dark:hover:bg-rose-950/40 border-l-4 border-l-rose-500' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40'); ?>">
                             <div class="flex items-start gap-3 flex-1 min-w-0">
                                 
                                 <button
                                     type="button"
                                     wire:click="updateTaskStatus(<?php echo e($task->id); ?>, '<?php echo e($task->status === 'completed' ? 'in_progress' : 'completed'); ?>')"
-                                    class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border transition cursor-pointer <?php echo e($task->status === 'completed' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-zinc-300 dark:border-zinc-600 hover:border-emerald-500'); ?>"
+                                    class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border transition cursor-pointer <?php echo e($task->status === 'completed' ? 'bg-emerald-500 border-emerald-500 text-white' : ($task->isOverdue() ? 'border-rose-400 hover:border-emerald-500' : 'border-zinc-300 dark:border-zinc-600 hover:border-emerald-500')); ?>"
                                     title="<?php echo e($task->status === 'completed' ? 'Mark In Progress' : 'Mark Completed'); ?>"
                                 >
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->status === 'completed'): ?>
@@ -754,6 +1139,14 @@
                                             <?php echo e($task->title); ?>
 
                                         </h4>
+
+                                        
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->isOverdue()): ?>
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                                <?php echo e($task->overdueBadgeText()); ?>
+
+                                            </span>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                                         
                                         <span class="px-2 py-0.5 rounded text-[10px] font-bold <?php echo e($task->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($task->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300')); ?>">
@@ -796,8 +1189,8 @@
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->status === 'completed'): ?>
                                         <span class="text-emerald-600 text-[11px] font-medium">Done</span>
                                     <?php elseif($task->isOverdue()): ?>
-                                        <span class="font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 text-[11px]">
-                                            Overdue
+                                        <span class="font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800 text-[11px]">
+                                            <?php echo e($task->due_date ? $task->due_date->format('M d') : ''); ?> (Overdue)
                                         </span>
                                     <?php elseif($task->due_date): ?>
                                         <span class="text-zinc-500 font-medium text-[11px]">
@@ -980,8 +1373,35 @@
                     <?php ob_start(); ?>
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->viewingTask): ?>
             <div class="space-y-5">
+                
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->viewingTask->isOverdue()): ?>
+                    <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 text-rose-900 dark:text-rose-200 flex items-start gap-3 shadow-xs">
+                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                        <div class="text-xs space-y-0.5">
+                            <p class="font-black text-rose-700 dark:text-rose-300 uppercase tracking-wider">
+                                <?php echo e($this->viewingTask->overdueBadgeText()); ?>
+
+                            </p>
+                            <p>
+                                This task was due on <strong><?php echo e($this->viewingTask->due_date->format('F d, Y')); ?></strong> and is currently <strong><?php echo e($this->viewingTask->daysOverdue()); ?> days past deadline</strong>. Status is still <em><?php echo e(ucfirst(str_replace('_', ' ', $this->viewingTask->status))); ?></em>.
+                            </p>
+                        </div>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
                 <div class="pb-3 border-b border-zinc-200 dark:border-zinc-800 space-y-1">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->viewingTask->isOverdue()): ?>
+                            <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                <?php echo e($this->viewingTask->overdueBadgeText()); ?>
+
+                            </span>
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
                         <span class="text-xs font-bold px-2.5 py-0.5 rounded-full <?php echo e($this->viewingTask->priority === 'high' ? 'bg-rose-50 text-rose-700 border border-rose-200' : ($this->viewingTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 border border-sky-200' : 'bg-zinc-100 text-zinc-700')); ?>">
                             <?php echo e(ucfirst($this->viewingTask->priority)); ?> Priority
                         </span>
@@ -1010,9 +1430,9 @@
                         <span class="font-semibold text-zinc-400 uppercase tracking-wider text-[10px]">Assigned To</span>
                         <p class="font-bold text-zinc-900 dark:text-white"><?php echo e($this->viewingTask->assignee ? $this->viewingTask->assignee->name : 'Unassigned'); ?></p>
                     </div>
-                    <div class="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-1">
-                        <span class="font-semibold text-zinc-400 uppercase tracking-wider text-[10px]">Due Date</span>
-                        <p class="font-bold text-zinc-900 dark:text-white"><?php echo e($this->viewingTask->due_date ? $this->viewingTask->due_date->format('M d, Y') : 'No deadline'); ?></p>
+                    <div class="p-3 rounded-xl border <?php echo e($this->viewingTask->isOverdue() ? 'border-rose-300 dark:border-rose-800 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-800'); ?> space-y-1">
+                        <span class="font-semibold <?php echo e($this->viewingTask->isOverdue() ? 'text-rose-600' : 'text-zinc-400'); ?> uppercase tracking-wider text-[10px]">Due Date</span>
+                        <p class="font-bold <?php echo e($this->viewingTask->isOverdue() ? 'text-rose-700 dark:text-rose-300' : 'text-zinc-900 dark:text-white'); ?>"><?php echo e($this->viewingTask->due_date ? $this->viewingTask->due_date->format('M d, Y') : 'No deadline'); ?></p>
                     </div>
                 </div>
 

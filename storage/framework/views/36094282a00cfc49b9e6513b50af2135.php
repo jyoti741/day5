@@ -34,17 +34,19 @@
 <?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
-<?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
-<?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
-<?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
+<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
@@ -81,8 +83,6 @@
 <?php # [BlazeFolded]:{flux::select.option}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/option/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::select}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/select/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::button}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/button/index.blade.php}:{1787526214} ?>
-<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
-<?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::icon}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/icon/index.blade.php}:{1787526214} ?>
 <?php # [BlazeFolded]:{flux::heading}:{C:\Users\farza\.gemini\antigravity-ide\scratch\office-task-manager\vendor\livewire\flux\src/../stubs/resources/views/flux/heading.blade.php}:{1787526214} ?>
@@ -537,8 +537,8 @@
 <?php $__blaze->popData(); $__env->popConsumableComponentData(); ?><?php echo ltrim(ob_get_clean()); ?>
 
             
-            <?php ob_start(); ?><?php $__blaze->pushData(['wire:model.live' => 'overdueFilter', 'class' => 'min-w-[140px]', 'placeholder' => 'Overdue Status']); $__env->pushConsumableComponentData(['wire:model.live' => 'overdueFilter', 'class' => 'min-w-[140px]', 'placeholder' => 'Overdue Status']); ?><select
-    class="appearance-none [:where(&amp;)]:w-full ps-3 pe-10 block h-10 py-2 text-base sm:text-sm leading-[1.375rem] rounded-lg shadow-xs border bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 dark:text-zinc-300 disabled:text-zinc-500 dark:disabled:text-zinc-400 has-[option.placeholder:checked]:text-zinc-400 dark:has-[option.placeholder:checked]:text-zinc-400 dark:[&amp;_option]:bg-zinc-700 dark:[&amp;_option]:text-white disabled:shadow-none border border-zinc-200 border-b-zinc-300/80 dark:border-white/10 min-w-[140px]" wire:model.live="overdueFilter"
+            <?php ob_start(); ?><?php $__blaze->pushData(['wire:model.live' => 'overdueFilter', 'class' => 'min-w-[160px]', 'placeholder' => 'Overdue Status']); $__env->pushConsumableComponentData(['wire:model.live' => 'overdueFilter', 'class' => 'min-w-[160px]', 'placeholder' => 'Overdue Status']); ?><select
+    class="appearance-none [:where(&amp;)]:w-full ps-3 pe-10 block h-10 py-2 text-base sm:text-sm leading-[1.375rem] rounded-lg shadow-xs border bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 dark:text-zinc-300 disabled:text-zinc-500 dark:disabled:text-zinc-400 has-[option.placeholder:checked]:text-zinc-400 dark:has-[option.placeholder:checked]:text-zinc-400 dark:[&amp;_option]:bg-zinc-700 dark:[&amp;_option]:text-white disabled:shadow-none border border-zinc-200 border-b-zinc-300/80 dark:border-white/10 min-w-[160px]" wire:model.live="overdueFilter"
          name="overdueFilter"         data-flux-control
     data-flux-select-native
     data-flux-group-target
@@ -552,6 +552,9 @@
                 <?php ob_start(); ?><option
     
      value="overdue"      <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::$currentLoop['key'] = 'overdue'; ?>wire:key="overdue" ><?php ob_start(); ?>Overdue Only<?php echo trim(ob_get_clean()); ?></option><?php echo ltrim(ob_get_clean()); ?>
+                <?php ob_start(); ?><option
+    
+     value="due_soon"      <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::$currentLoop['key'] = 'due_soon'; ?>wire:key="due_soon" ><?php ob_start(); ?>Due Soon (Next 3 Days)<?php echo trim(ob_get_clean()); ?></option><?php echo ltrim(ob_get_clean()); ?>
             <?php echo trim(ob_get_clean()); ?>
 
 </select>
@@ -674,6 +677,17 @@
         <?php echo ltrim(ob_get_clean()); ?>
                     </button>
                 </span>
+            <?php elseif($overdueFilter === 'due_soon'): ?>
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold">
+                    <span>Filter: <strong>Due Soon (Next 3 Days)</strong></span>
+                    <button type="button" wire:click="$set('overdueFilter', 'all')" class="hover:text-amber-900 cursor-pointer">
+                        <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+</svg>
+
+        <?php echo ltrim(ob_get_clean()); ?>
+                    </button>
+                </span>
             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($assigneeFilter !== 'all'): ?>
@@ -722,7 +736,7 @@
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <tr class="transition group <?php echo e($task->isOverdue() ? 'bg-rose-50/30 dark:bg-rose-950/20 hover:bg-rose-50/60 dark:hover:bg-rose-950/40' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40'); ?>">
+                            <tr class="transition group <?php echo e($task->isOverdue() ? 'bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50/70 dark:hover:bg-rose-950/40 border-l-4 border-l-rose-500' : 'hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40'); ?>">
                                 
                                 <td class="py-4 px-4 align-top max-w-sm">
                                     <div class="flex items-start gap-3">
@@ -751,9 +765,9 @@
 
                                                 
                                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->isOverdue()): ?>
-                                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
-                                                        <span class="size-1.5 rounded-full bg-rose-600 animate-pulse"></span>
-                                                        OVERDUE (<?php echo e($task->daysOverdue()); ?>d)
+                                                    <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2.5 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                                        <?php echo e($task->overdueBadgeText()); ?>
+
                                                     </span>
                                                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                             </div>
@@ -940,17 +954,28 @@
 
                                                 </span>
                                             <?php elseif($task->isOverdue()): ?>
-                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-800">
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded border border-rose-200 dark:border-rose-800">
                                                     <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3 text-rose-600" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
 </svg>
 
         <?php echo ltrim(ob_get_clean()); ?>
-                                                    Overdue by <?php echo e($task->daysOverdue()); ?>d
+                                                    <?php echo e($task->overdueBadgeText()); ?>
+
                                                 </span>
                                             <?php elseif($task->due_date->isToday()): ?>
-                                                <span class="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-extrabold text-amber-800 dark:text-amber-200 bg-amber-100 dark:bg-amber-950 px-2 py-0.5 rounded border border-amber-300 dark:border-amber-700 shadow-xs">
+                                                    <span class="size-1.5 rounded-full bg-amber-600 animate-pulse"></span>
                                                     Due Today
+                                                </span>
+                                            <?php elseif($task->due_date->isTomorrow()): ?>
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">
+                                                    Due Tomorrow
+                                                </span>
+                                            <?php elseif($task->isDueSoon()): ?>
+                                                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700 dark:text-amber-400 bg-amber-50/70 dark:bg-amber-950/60 px-2 py-0.5 rounded border border-amber-200/80 dark:border-amber-800">
+                                                    <?php echo e($task->remainingTimeLabel()); ?>
+
                                                 </span>
                                             <?php else: ?>
                                                 <span class="text-[11px] text-zinc-500 dark:text-zinc-400">
@@ -1080,15 +1105,21 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $allTasksForBoard->where('status', 'pending'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bTask): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border <?php echo e($bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80'); ?> shadow-sm space-y-3 hover:shadow-md transition">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border <?php echo e($bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/20' : 'border-zinc-200 dark:border-zinc-700/80'); ?> shadow-sm space-y-3 hover:shadow-md transition">
                             <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded <?php echo e($bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200')); ?>">
                                     <?php echo e(ucfirst($bTask->priority)); ?> Priority
                                 </span>
 
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($bTask->isOverdue()): ?>
-                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
-                                        OVERDUE (<?php echo e($bTask->daysOverdue()); ?>d)
+                                    <span class="text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                        <?php echo e($bTask->overdueBadgeText()); ?>
+
+                                    </span>
+                                <?php elseif($bTask->isDueSoon()): ?>
+                                    <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded-full border border-amber-200">
+                                        <?php echo e($bTask->remainingTimeLabel()); ?>
+
                                     </span>
                                 <?php else: ?>
                                     <span class="text-[10px] text-zinc-400">Due <?php echo e($bTask->due_date ? $bTask->due_date->format('M d') : '-'); ?></span>
@@ -1160,15 +1191,21 @@
 
                 <div class="flex flex-col gap-3 min-h-[300px]">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $allTasksForBoard->where('status', 'in_progress'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bTask): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border <?php echo e($bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 bg-rose-50/20' : 'border-zinc-200 dark:border-zinc-700/80'); ?> shadow-sm space-y-3 hover:shadow-md transition">
+                        <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl border <?php echo e($bTask->isOverdue() ? 'border-rose-300 dark:border-rose-800/80 border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/20' : 'border-zinc-200 dark:border-zinc-700/80'); ?> shadow-sm space-y-3 hover:shadow-md transition">
                             <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <span class="text-[11px] font-semibold px-2 py-0.5 rounded <?php echo e($bTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400 border border-rose-200' : ($bTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-400 border border-sky-200' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 border border-zinc-200')); ?>">
                                     <?php echo e(ucfirst($bTask->priority)); ?> Priority
                                 </span>
 
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($bTask->isOverdue()): ?>
-                                    <span class="text-[10px] font-black uppercase text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950 px-1.5 py-0.5 rounded border border-rose-200">
-                                        OVERDUE (<?php echo e($bTask->daysOverdue()); ?>d)
+                                    <span class="text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                        <?php echo e($bTask->overdueBadgeText()); ?>
+
+                                    </span>
+                                <?php elseif($bTask->isDueSoon()): ?>
+                                    <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950 px-2 py-0.5 rounded-full border border-amber-200">
+                                        <?php echo e($bTask->remainingTimeLabel()); ?>
+
                                     </span>
                                 <?php else: ?>
                                     <span class="text-[10px] text-zinc-400">Due <?php echo e($bTask->due_date ? $bTask->due_date->format('M d') : '-'); ?></span>
@@ -1486,7 +1523,7 @@
                         </thead>
                         <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $this->monthlyOverdueReport['tasks']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $oTask): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                <tr class="hover:bg-rose-50/30 dark:hover:bg-rose-950/20 transition">
+                                <tr class="hover:bg-rose-50/40 dark:hover:bg-rose-950/30 transition border-l-4 border-l-rose-500 bg-rose-50/20 dark:bg-rose-950/10">
                                     
                                     <td class="py-4 px-4 align-middle font-semibold text-zinc-900 dark:text-white">
                                         <?php echo e($oTask->title); ?>
@@ -1533,12 +1570,8 @@
                                     
                                     <td class="py-4 px-4 align-middle whitespace-nowrap">
                                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 shadow-xs">
-                                            <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3.5 text-rose-600" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-</svg>
+                                            <?php echo e($oTask->overdueBadgeText()); ?>
 
-        <?php echo ltrim(ob_get_clean()); ?>
-                                            <span><?php echo e($oTask->daysOverdue()); ?> days overdue</span>
                                         </span>
                                     </td>
 
@@ -1602,7 +1635,8 @@
         <?php echo ltrim(ob_get_clean()); ?>
                         <div class="text-xs space-y-0.5">
                             <p class="font-black text-rose-700 dark:text-rose-300 uppercase tracking-wider">
-                                OVERDUE TASK WARNING
+                                <?php echo e($this->viewingTask->overdueBadgeText()); ?>
+
                             </p>
                             <p>
                                 This task was due on <strong><?php echo e($this->viewingTask->due_date->format('F d, Y')); ?></strong> and is currently <strong><?php echo e($this->viewingTask->daysOverdue()); ?> days past deadline</strong>. Status is still <em><?php echo e(ucfirst(str_replace('_', ' ', $this->viewingTask->status))); ?></em>.
@@ -1615,6 +1649,13 @@
                 <div class="flex items-start justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
                     <div class="space-y-1">
                         <div class="flex items-center gap-2 flex-wrap">
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->viewingTask->isOverdue()): ?>
+                                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 px-2 py-0.5 rounded-full border border-rose-300 dark:border-rose-700 shadow-xs">
+                                    <?php echo e($this->viewingTask->overdueBadgeText()); ?>
+
+                                </span>
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold
                                 <?php echo e($this->viewingTask->priority === 'high' ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border border-rose-200 dark:border-rose-800' :
                                    ($this->viewingTask->priority === 'medium' ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-400 border border-sky-200 dark:border-sky-800' :
@@ -1630,17 +1671,6 @@
                                 <?php echo e(ucfirst(str_replace('_', ' ', $this->viewingTask->status))); ?>
 
                             </span>
-
-                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->viewingTask->isOverdue()): ?>
-                                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-xs">
-                                    <?php ob_start(); ?><svg class="shrink-0 [:where(&amp;)]:size-6 size-3" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-</svg>
-
-        <?php echo ltrim(ob_get_clean()); ?>
-                                    OVERDUE
-                                </span>
-                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         </div>
                         <?php ob_start(); ?><div class="font-medium [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white text-2xl [&amp;:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&amp;]:mt-2 font-bold text-zinc-900 dark:text-white leading-tight" data-flux-heading><?php ob_start(); ?>
                             <?php echo e($this->viewingTask->title); ?>

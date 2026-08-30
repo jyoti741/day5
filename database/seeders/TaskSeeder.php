@@ -15,12 +15,22 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create or get primary office users / team members
+        // Create or get System Administrator & Office Manager
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@astgd.com'],
+            [
+                'name' => 'System Administrator',
+                'password' => Hash::make('password'),
+                'is_admin' => true,
+            ]
+        );
+
         $manager = User::firstOrCreate(
             ['email' => 'manager@astgd.com'],
             [
                 'name' => 'Sarah Jenkins (Office Manager)',
                 'password' => Hash::make('password'),
+                'is_admin' => true,
             ]
         );
 
